@@ -1,10 +1,11 @@
 from django.shortcuts import render,get_object_or_404,redirect  
 from django.contrib.auth.models import User
-
 from django.contrib import auth
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm,CompanyInfoForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from projects import views
+from projects import urls
 
 # Create your views here.
 def register(request):
@@ -13,6 +14,7 @@ def register(request):
     else:
         if request.method == 'POST':
             user_form = UserRegisterForm(request.POST)
+            company_form = CompanyInfoForm(request.POST)
             email = request.POST['email']
             username = request.POST['username']
             password1 = request.POST['password1']
@@ -26,11 +28,12 @@ def register(request):
                     return redirect('register')
                 
                 else:
-                    if user_form.is_valid():
+                    if user_form.is_valid() and company_form.is_valid():
                         user = user_form.save()
                         user.save()
-                        obj = Delivered(user=user, is_delivered=True)
-                        obj.save()
+                        company_name = company_form.save(commit=False)
+                        company_name.user = user
+                        company_name.save() 
                         return redirect('login')
                     else:
                         messages.error(request,f"least 8 char & don't use commonly used password & don't use entirely numeric.")
@@ -41,9 +44,11 @@ def register(request):
 
         else:
             user_form = UserRegisterForm()
+            company_form = CompanyInfoForm()
             
             context ={
-                'user_form': user_form
+                'user_form': user_form,
+                'company_form': company_form
             }
             return render(request, 'accounts/register.html',context=context)
 
