@@ -6,7 +6,7 @@ class Project(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     key = models.CharField(max_length=50)
-
+    document = models.FileField(upload_to='documents/')
+    
     def __str__(self):
         return self.name
-    
