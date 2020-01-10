@@ -24,7 +24,8 @@
 
 		<!--end::Web font -->
 
-		<!--begin::Global Theme Styles -->
+        <!--begin::Global Theme Styles -->
+        
 		<link href="{% static 'assets/vendors/base/vendors.bundle.css'%}" rel="stylesheet" type="text/css" />
 
 		<!--RTL version:<link href="../assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
@@ -46,6 +47,7 @@
 	<!-- end::Head -->
 
 	<!-- begin::Body -->
+	<!-- begin::Body -->
 	<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
 
 		<!-- begin:: Page -->
@@ -61,7 +63,7 @@
 							<div class="m-stack m-stack--ver m-stack--general">
 								<div class="m-stack__item m-stack__item--middle m-brand__logo">
 									<a href="index.html" class="m-brand__logo-wrapper">
-										<img alt="" src="{% static 'assets/demo/default/media/img/logo/logo_default_dark.png' %} />
+										<img alt="" src="../assets/demo/default/media/img/logo/logo_default_dark.png" />
 									</a>
 								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -103,7 +105,7 @@
 					<!-- BEGIN: Aside Menu -->
 					<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark " m-menu-vertical="1" m-menu-scrollable="1" m-menu-dropdown-timeout="500" style="position: relative;">
 						<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
-							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'index'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Dashboard</span>
+							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="index.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Dashboard</span>
 											<span class="m-menu__link-badge"><span class="m-badge m-badge--danger">2</span></span> </span></span></a></li>
 							<li class="m-menu__section ">
 								<h4 class="m-menu__section-text">Components</h4>
@@ -112,8 +114,8 @@
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">Project</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
-										<li class="m-menu__item " aria-haspopup="true"><a href="{% url 'createproject'%}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Create Project</span></a></li>
-										<li class="m-menu__item " aria-haspopup="true"><a href="{% url 'index' %}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">View Project</span></a></li>
+										<li class="m-menu__item " aria-haspopup="true"><a href="create-project.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Create Project</span></a></li>
+										<li class="m-menu__item " aria-haspopup="true"><a href="view-project.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">View Project</span></a></li>
 										
 									</ul>
 								</div>
@@ -134,11 +136,11 @@
 						<div class="d-flex align-items-center">
 							<div class="mr-auto">
 								<h3 class="m-subheader__title ">Create Project</h3>
-				</div>
+							</div>
 						</div>
 					</div>
 
-					 END: Subheader -->
+					<!-- END: Subheader -->
 					<div class="m-content">
 						<div class="row">
 							<div class="col-lg-12">
@@ -152,49 +154,32 @@
 													<i class="la la-gear"></i>
 												</span>
 												<h3 class="m-portlet__head-text">
-													Create Project
+													Review Project
 												</h3>
 											</div>
 										</div>
 									</div>
 
 									<!--begin::Form-->
-									<form class="m-form" method="POST" enctype="multipart/form-data" id="projectForm">
-                                        {% csrf_token%}
+									<form class="m-form">
 										<div class="m-portlet__body">
 											<div class="m-form__section m-form__section--first">
 												<div class="form-group m-form__group">
-													<label for="example_input_full_name">Project Name:</label>
-                                                    <!-- <input name="user" class="form-control m-input" value="{{request.user}}" type="hidden"> -->
-
-													{{ form.name|add_class:"form-control m-input"|attr:"placeholder:Enter Project name"|attr:"id:pname"|attr:"type:text" }}
-												</div>
-												<div class="form-group m-form__group">
-													<label>Project Description:</label>
+													<label>Enter review:</label>
                                                     <!-- <input type="text" class="form-control m-input" placeholder="Enter Project Discription"> -->
-                                                    {{ form.description|add_class:"form-control m-input"|attr:"placeholder:Enter Project Discription"|attr:"id:description"|attr:"type:text" }}
+                                                    <textarea name="sentence" cols="40" rows="10" id="description" placeholder="Enter Project Discription" class="form-control m-input"></textarea>
 												</div>
-												<div class="form-group m-form__group">
-													<label for="example_input_full_name">Key Value:</label>
-                                                    <!-- <input type="text" class="form-control m-input" placeholder="Enter Key Value"> -->
-                                                    {{ form.key|add_class:"form-control m-input"|attr:"placeholder:Enter Key Value"|attr:"id:key"|attr:"type:text" }}
-												</div>
-												<div class="form-group m-form__group">
-												<label for="exampleInputEmail1">File Browser</label>
-												<div></div>
-												<div class="custom-file col-md-4">
-                                                    <!-- <input type="file" class="custom-file-input" id="customFile"> -->
-                                                    {{ form.document|add_class:"form-control m-input"|attr:"id:customFile"|attr:"type:file" }}
-													<label class="custom-file-label" for="customFile">Choose file</label>
-												</div>
+												
 											</div>
 											</div>
-										</div>
-										<div class="m-portlet__foot m-portlet__foot--fit">
+											<div class="m-portlet__foot m-portlet__foot--fit">
 											<div class="m-form__actions m-form__actions">
-												<input type="submit" class="btn btn-primary" value="submit">
+												<button type="reset" class="btn btn-primary">Submit</button>
+												
 											</div>
 										</div>
+										</div>
+										
 									</form>
 
 									<!--end::Form-->
@@ -236,21 +221,11 @@
 			<i class="la la-arrow-up"></i>
 		</div>
 
-		<!-- end::Scroll Top -->
-		
-		<script
-		src="https://code.jquery.com/jquery-3.4.1.min.js"
-		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-		crossorigin="anonymous"></script>
 
-		<script type="text/javascript">
-			document.getElementById('customFile').addEventListener('change',function(){
-                //get the file name
-                var fileName = this.value;
-                //replace the "Choose a file" label
-                document.querySelector('.custom-file-label').innerHTML = fileName.replace('C:\\fakepath\\', " ");
-            })
-		</script>
+		<!-- end::Scroll Top -->
+
+		
+
 		<!--begin::Global Theme Bundle -->
 		<script src="{% static 'assets/vendors/base/vendors.bundle.js' %}" type="text/javascript"></script>
 		<script src="{% static 'assets/demo/default/base/scripts.bundle.js' %}" type="text/javascript"></script>
@@ -264,33 +239,6 @@
 
 		<!--begin::Page Scripts -->
 		<script src="{% static 'assets/app/js/dashboard.js' %}" type="text/javascript"></script>
-
-		<script>
-			function upload(event) {
-				event.preventDefault();
-				var data = new FormData($('.m-form').get(0));
-				
-				$.ajax({
-					url: "/projects/create/",
-					type: "POST",
-					data: data,
-					cache: false,
-					processData: false,
-					contentType: false,
-					success: function(data) {
-						console.log(data);
-						document.getElementsByClassName("m-form")[0].reset();
-						document.querySelector('.custom-file-label').innerHTML = "Choose File";
-						alert('success');
-					}
-				});
-				return false;
-			}
-				
-				$(function() {
-					$('.m-form').submit(upload);
-				});
-		</script>
 
 		<!--end::Page Scripts -->
 	</body>

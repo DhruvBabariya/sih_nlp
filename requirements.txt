@@ -1,7 +1,16 @@
+certifi==2019.11.28
+chardet==3.0.4
 Django==2.2.1
 django-widget-tweaks==1.4.5
 fasttext==0.9.1
 numpy==1.18.1
 pybind11==2.4.3
+idna==2.8
+nltk==3.4.5
 pytz==2019.3
+requests==2.22.0
+six==1.13.0
 sqlparse==0.3.0
+textblob==0.15.3
+urllib3==1.25.7
+vaderSentiment==3.2.1
