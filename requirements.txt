@@ -1,4 +1,7 @@
 Django==2.2.1
 django-widget-tweaks==1.4.5
+fasttext==0.9.1
+numpy==1.18.1
+pybind11==2.4.3
 pytz==2019.3
 sqlparse==0.3.0
