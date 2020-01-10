@@ -159,7 +159,7 @@
 									</div>
 
 									<!--begin::Form-->
-									<form class="m-form" method="POST" enctype="multipart/form-data">
+									<form class="m-form" method="POST" enctype="multipart/form-data" id="projectForm">
                                         {% csrf_token%}
 										<div class="m-portlet__body">
 											<div class="m-form__section m-form__section--first">
@@ -239,7 +239,10 @@
 		<!-- end::Scroll Top -->
 
 		
-
+		<script
+		src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		crossorigin="anonymous"></script>
 		<!--begin::Global Theme Bundle -->
 		<script src="{% static 'assets/vendors/base/vendors.bundle.js' %}" type="text/javascript"></script>
 		<script src="{% static 'assets/demo/default/base/scripts.bundle.js' %}" type="text/javascript"></script>
@@ -253,6 +256,32 @@
 
 		<!--begin::Page Scripts -->
 		<script src="{% static 'assets/app/js/dashboard.js' %}" type="text/javascript"></script>
+
+		<script>
+			function upload(event) {
+				event.preventDefault();
+				var data = new FormData($('.m-form').get(0));
+				
+				$.ajax({
+					url: "/projects/create/",
+					type: "POST",
+					data: data,
+					cache: false,
+					processData: false,
+					contentType: false,
+					success: function(data) {
+						console.log(data);
+						document.getElementById("myForm").reset();
+						alert('success');
+					}
+				});
+				return false;
+			}
+				
+				$(function() {
+					$('.m-form').submit(upload);
+				});
+		</script>
 
 		<!--end::Page Scripts -->
 	</body>
