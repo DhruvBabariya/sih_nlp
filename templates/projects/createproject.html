@@ -279,7 +279,8 @@
 					contentType: false,
 					success: function(data) {
 						console.log(data);
-						document.getElementById("myForm").reset();
+						document.getElementsByClassName("m-form")[0].reset();
+						document.querySelector('.custom-file-label').innerHTML = "Choose File";
 						alert('success');
 					}
 				});
