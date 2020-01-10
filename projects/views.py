@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect, HttpResponseRedirect,get_object_or_404
+from django.shortcuts import render,redirect, HttpResponseRedirect,get_object_or_404, HttpResponse
 from .models import Project
 from .forms import ProjectForm
 from django.contrib import messages
@@ -41,7 +41,8 @@ def createproject(request):
             document_form.save()
         else:
             print("Invalid form")
-        return redirect('index')
+        message = "Success"
+        return HttpResponse(message)
     else:
         form = ProjectForm()
         context = {
