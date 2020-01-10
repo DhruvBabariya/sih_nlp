@@ -3,6 +3,8 @@ from .models import Project
 from .forms import ProjectForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .vader import sentiment_scores
+import json
 
 # Create your views here.
 @login_required(login_url='/login')
@@ -46,3 +48,12 @@ def createproject(request):
             'form' : form,
         }
         return render(request,'projects/createproject.html',context)
+
+@login_required(login_url='/login')
+def single_review(request):
+    if request.method == 'POST':
+        sentence = request.POST['sentence']
+        sentiment_dict = sentiment_scores(sentence)
+        return HttpResponse(json.dumps(sentiment_dict))
+    return render(request,'projects/single_review.html')
+                
