@@ -56,5 +56,6 @@ def single_review(request):
         sentence = request.POST['sentence']
         sentiment_dict = sentiment_scores(sentence)
         return HttpResponse(json.dumps(sentiment_dict))
-    return render(request,'projects/single_review.html')
+    else:
+        return render(request,'projects/single_review.html')
                 
