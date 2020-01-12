@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect, HttpResponseRedirect,get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404, HttpResponse
 from .models import Project
 from .forms import ProjectForm
 from django.contrib import messages
@@ -10,26 +10,29 @@ import json
 @login_required(login_url='/login')
 def projects(request):
     querysets = Project.objects.filter(user=request.user)
-    context ={
-            'querysets': querysets
+    context = {
+        'querysets': querysets
     }
-    return render(request,'projects/projects.html',context)
+    return render(request, 'projects/projects.html', context)
+
 
 @login_required(login_url='/login')
-def projectchart(request,pk):
+def projectchart(request, pk):
     project = get_object_or_404(Project, pk=pk, user=request.user)
     context = {
         'project': project
     }
-    return render(request,'projects/projectchart.html',context)
+    return render(request, 'projects/projectchart.html', context)
+
 
 @login_required(login_url='/login')
-def projectdetail(request,pk):
+def projectdetail(request, pk):
     project = get_object_or_404(Project, pk=pk, user=request.user)
     context = {
         'project': project
     }
-    return render(request,'projects/projectdetail.html',context)
+    return render(request, 'projects/projectdetail.html', context)
+
 
 @login_required(login_url='/login')
 def createproject(request):
@@ -46,9 +49,10 @@ def createproject(request):
     else:
         form = ProjectForm()
         context = {
-            'form' : form,
+            'form': form,
         }
-        return render(request,'projects/createproject.html',context)
+        return render(request, 'projects/createproject.html', context)
+
 
 @login_required(login_url='/login')
 def single_review(request):
