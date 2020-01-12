@@ -27,6 +27,8 @@
 		<!--begin::Global Theme Styles -->
 		<link href="{% static 'assets/vendors/base/vendors.bundle.css'%}" rel="stylesheet" type="text/css" />
 
+		<link href="{% static 'assets/style.css'%}" rel="stylesheet" type="text/css" />
+
 		<!--RTL version:<link href="../assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
 		<link href="{% static 'assets/demo/default/base/style.bundle.css' %}" rel="stylesheet" type="text/css" />
 
@@ -248,7 +250,7 @@
                 //get the file name
                 var fileName = this.value;
                 //replace the "Choose a file" label
-                document.querySelector('.custom-file-label').innerHTML = fileName.replace('C:\\fakepath\\', " ");
+                document.querySelector('.custom-file-label').innerHTML = fileName;
             })
 		</script>
 		<!--begin::Global Theme Bundle -->
@@ -278,10 +280,9 @@
 					processData: false,
 					contentType: false,
 					success: function(data) {
-						console.log(data);
 						document.getElementsByClassName("m-form")[0].reset();
 						document.querySelector('.custom-file-label').innerHTML = "Choose File";
-						alert('success');
+						swal('Project Created Successfully');
 					}
 				});
 				return false;

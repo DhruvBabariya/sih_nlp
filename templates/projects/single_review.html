@@ -28,6 +28,8 @@
         
 		<link href="{% static 'assets/vendors/base/vendors.bundle.css'%}" rel="stylesheet" type="text/css" />
 
+		<link href="{% static 'assets/style.css'%}" rel="stylesheet" type="text/css" />
+
 		<!--RTL version:<link href="../assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
 		<link href="{% static 'assets/demo/default/base/style.bundle.css' %}" rel="stylesheet" type="text/css" />
 
@@ -167,8 +169,7 @@
 											<div class="m-form__section m-form__section--first">
 												<div class="form-group m-form__group">
 													<label>Enter review:</label>
-                                                    <!-- <input type="text" class="form-control m-input" placeholder="Enter Project Discription"> -->
-                                                    <textarea name="sentence" cols="40" rows="10" id="description" placeholder="Enter review..." class="form-control m-input"></textarea>
+                                                    <textarea required style="font-family: 'Poppins';" name="sentence" cols="40" rows="10" id="description" placeholder="Enter review..." class="form-control m-input"></textarea>
 												</div>
 												
 											</div>
@@ -241,9 +242,8 @@
 					processData: false,
 					contentType: false,
 					success: function(data) {
-						console.log(data);
 						document.getElementsByClassName("m-form")[0].reset();
-						alert('success');
+						swal(data);
 					}
 				});
 				return false;
