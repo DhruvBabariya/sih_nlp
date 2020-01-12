@@ -7,7 +7,7 @@ from .vader import sentiment_scores
 import json
 
 # Create your views here.
-@login_required(login_url='/login')
+@login_required(login_url='/accounts/login')
 def projects(request):
     querysets = Project.objects.filter(user=request.user)
     context = {
@@ -16,7 +16,7 @@ def projects(request):
     return render(request, 'projects/projects.html', context)
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/accounts/login')
 def projectchart(request, pk):
     project = get_object_or_404(Project, pk=pk, user=request.user)
     context = {
@@ -25,7 +25,7 @@ def projectchart(request, pk):
     return render(request, 'projects/projectchart.html', context)
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/accounts/login')
 def projectdetail(request, pk):
     project = get_object_or_404(Project, pk=pk, user=request.user)
     context = {
@@ -34,7 +34,7 @@ def projectdetail(request, pk):
     return render(request, 'projects/projectdetail.html', context)
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/accounts/login')
 def createproject(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
@@ -54,7 +54,7 @@ def createproject(request):
         return render(request, 'projects/createproject.html', context)
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/accounts/login')
 def single_review(request):
     if request.method == 'POST':
         sentence = request.POST['sentence']
