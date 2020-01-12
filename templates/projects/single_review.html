@@ -28,8 +28,8 @@
 												<span class="m-portlet__head-icon m--hide">
 													<i class="la la-gear"></i>
 												</span>
-												<h3 class="m-portlet__head-text">
-													Review Project
+												<h3 class="m-portlet__head-text fw-800">
+													<i class="fa fa-comment-alt"></i> Single Review Analysis
 												</h3>
 											</div>
 										</div>
@@ -48,10 +48,12 @@
 											</div>
 											<div style="display: hidden;" id="analytics"></div>
 											</div>
+											
 											<div class="m-portlet__foot m-portlet__foot--fit">
-											<div class="m-form__actions m-form__actions">
-												<button type="submit" class="btn btn-primary">Submit</button>
-												
+												<div class="m-form__actions">
+													<button type="submit" class="btn btn-success"><i class="fa fa-check-circle"> </i> Submit</button>
+													
+												</div>
 											</div>
 										</div>
 										</div>
@@ -65,15 +67,63 @@
 							
 						</div>
 					</div>
+					<!-- Chart container starts-->
+					<div class="m-content" id="graphDiv">
+						<div class="row">
+							<div class="col-lg-12">
+
+								<!--begin::Portlet-->
+								<div class="m-portlet">
+									<div class="m-portlet__head">
+										<div class="m-portlet__head-caption">
+											<div class="m-portlet__head-title">
+												<span class="m-portlet__head-icon m--hide">
+													<i class="la la-gear"></i>
+												</span>
+												<h3 class="m-portlet__head-text fw-800">
+													<i class="fa fa-chart-bar"> </i>Graphical Analysis
+												</h3>
+											</div>
+										</div>
+									</div>
+
+									
+									<div class="m-portlet__body">
+										<div class="row align-items-center">
+											<div class="col-md-6">
+												<canvas id="myChart"></canvas>
+											</div>
+											<div class="col-md-6">
+												<div class="m-alert m-alert--icon m-alert--air alert" id="sresult">
+													<div class="m-alert__icon"></div>
+													<div class="m-alert__text">
+														<strong><span></span></strong>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+
+								<!--end::Portlet-->
+							</div>
+							
+						</div>
+					</div>
+					<!-- chart container ends-->
 					
 				</div>
 			</div>
+
 
 			<!-- end:: Body -->
 
 {% endblock %}
 
 
+		<!-- end::Scroll Top -->
+		<script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" type="text/javascript"></script>
 {% block extrajs %}
 <script
 src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -95,19 +145,74 @@ crossorigin="anonymous"></script>
 					processData: false,
 					contentType: false,
 					success: function(data) {
-						$("#analytics").show();
-						var parsedData = JSON.parse(data);
-						if(parsedData.compound < 0) {
-							$("#analytics").append(`<h4>Negative</h4>`);
-						} else if(parsedData.compound > 0) {
-							$("#analytics").append(`<h4>Positive</h4>`);
+						//console.log(JSON.parse(data));
+						$('#graphDiv').show();
+						var cd = JSON.parse(data);
+						displayChart(cd);
+						if(cd['compound']>=0.05){
+							$("#sresult").addClass("alert-success");
+							$(".m-alert__icon").html("<i class='fa fa-smile'> </i> ");
+							$(".m-alert__text span").html("Positive Sentiment");
 						}
-						document.getElementsByClassName("m-form")[0].reset();
-						swal(data);
+						else if(cd['compound'] > -0.05 && cd['compound']<0.05){
+							$("#sresult").addClass("alert-warning");
+							$(".m-alert__icon").html("<i class='fa fa-meh'> </i> ");
+							$(".m-alert__text span").html("Neutral Sentiment");
+						}
+						else{
+							$("#sresult").addClass("alert-danger");
+							$(".m-alert__icon").html("<i class='fa fa-frown'> </i> ");
+							$(".m-alert__text span").html("Negative Sentiment");
+						}
+						//document.getElementsByClassName("m-form")[0].reset();
+						//alert('success');
 					}
 				});
 				return false;
 			}
+				
+			$(function() {
+				$('.m-form').submit(uploadAjax);
+				
+			});
+
+			function displayChart(chartdata){
+				var ctx = document.getElementById('myChart');
+				var myChart = new Chart(ctx, {
+				    type: 'bar',
+				    data: {
+				        labels: ['Positive', 'Neutral', 'Negative'],
+				        datasets: [{
+				            label: '% Sentiment Analysis',
+				            data: [chartdata['pos']*100,chartdata['neu']*100,chartdata['neg']*100],
+				            backgroundColor: [
+				                '#a4dfdf',
+				                'rgba(54, 162, 235, 0.2)',
+				                '#ffb0c1'
+				            ],
+				            borderColor: [
+				                '#70cdcdcd',
+				                'rgba(54, 162, 235, 1)',
+				                '#ff6283'
+				            ],
+				            borderWidth: 2
+				        }]
+				    },
+				    options: {
+				        scales: {
+				            yAxes: [{
+				                ticks: {
+				                    beginAtZero: true
+				                }
+				            }]
+				        }
+				    }
+				});
+			}
+
+		</script>		
+
+
 		
 		$(function() {
 			$('.m-form').submit(uploadAjax);
