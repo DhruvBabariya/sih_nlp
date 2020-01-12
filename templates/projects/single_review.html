@@ -173,6 +173,7 @@
 												</div>
 												
 											</div>
+											<div style="display: hidden;" id="analytics"></div>
 											</div>
 											<div class="m-portlet__foot m-portlet__foot--fit">
 											<div class="m-form__actions m-form__actions">
@@ -181,7 +182,6 @@
 											</div>
 										</div>
 										</div>
-										
 									</form>
 
 									<!--end::Form-->
@@ -233,7 +233,8 @@
 			function uploadAjax(event) {
 				event.preventDefault();
 				var data = new FormData($('.m-form').get(0));
-				
+				$('#analytics').empty();
+				$('#analytics').hide();
 				$.ajax({
 					url: "/projects/single_review",
 					type: "POST",
@@ -242,6 +243,13 @@
 					processData: false,
 					contentType: false,
 					success: function(data) {
+						$("#analytics").show();
+						var parsedData = JSON.parse(data);
+						if(parsedData.compound < 0) {
+							$("#analytics").append(`<h4>Negative</h4>`);
+						} else if(parsedData.compound > 0) {
+							$("#analytics").append(`<h4>Positive</h4>`);
+						}
 						document.getElementsByClassName("m-form")[0].reset();
 						swal(data);
 					}
