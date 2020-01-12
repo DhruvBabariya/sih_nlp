@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load widget_tweaks %}
-
 {% block title %} | create Project {% endblock %}
 {% block content %}
   				<!-- END: Left Aside -->
@@ -110,23 +109,22 @@ crossorigin="anonymous"></script>
 	function upload(event) {
 		event.preventDefault();
 		var data = new FormData($('.m-form').get(0));
-		
-		$.ajax({
-			url: "/projects/create/",
-			type: "POST",
-			data: data,
-			cache: false,
-			processData: false,
-			contentType: false,
-			success: function(data) {
-				console.log(data);
-				document.getElementsByClassName("m-form")[0].reset();
-				document.querySelector('.custom-file-label').innerHTML = "Choose File";
-				alert('success');
+				
+				$.ajax({
+					url: "/projects/create/",
+					type: "POST",
+					data: data,
+					cache: false,
+					processData: false,
+					contentType: false,
+					success: function(data) {
+						document.getElementsByClassName("m-form")[0].reset();
+						document.querySelector('.custom-file-label').innerHTML = "Choose File";
+						swal('Project Created Successfully');
+					}
+				});
+				return false;
 			}
-		});
-		return false;
-	}
 		
 		$(function() {
 			$('.m-form').submit(upload);

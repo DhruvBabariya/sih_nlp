@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load widget_tweaks %}
-
 {% block title %} | Single Review Analysis{% endblock %}
 {% block content %}
-  
 				<!-- END: Left Aside -->
 				<div class="m-grid__item m-grid__item--fluid m-wrapper">
 
@@ -44,11 +42,11 @@
 											<div class="m-form__section m-form__section--first">
 												<div class="form-group m-form__group">
 													<label>Enter review:</label>
-                                                    <!-- <input type="text" class="form-control m-input" placeholder="Enter Project Discription"> -->
-                                                    <textarea name="sentence" cols="40" rows="10" id="description" placeholder="Enter review..." class="form-control m-input"></textarea>
+                                                    <textarea required style="font-family: 'Poppins';" name="sentence" cols="40" rows="10" id="description" placeholder="Enter review..." class="form-control m-input"></textarea>
 												</div>
 												
 											</div>
+											<div style="display: hidden;" id="analytics"></div>
 											</div>
 											<div class="m-portlet__foot m-portlet__foot--fit">
 											<div class="m-form__actions m-form__actions">
@@ -57,7 +55,6 @@
 											</div>
 										</div>
 										</div>
-										
 									</form>
 
 									<!--end::Form-->
@@ -84,27 +81,33 @@ integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 crossorigin="anonymous"></script>
 
 <!-- end::Scroll Top -->
-
-<script>
-	function uploadAjax(event) {
-		event.preventDefault();
-		var data = new FormData($('.m-form').get(0));
-		
-		$.ajax({
-			url: "/projects/single_review",
-			type: "POST",
-			data: data,
-			cache: false,
-			processData: false,
-			contentType: false,
-			success: function(data) {
-				console.log(data);
-				document.getElementsByClassName("m-form")[0].reset();
-				alert('success');
+		<script>
+			function uploadAjax(event) {
+				event.preventDefault();
+				var data = new FormData($('.m-form').get(0));
+				$('#analytics').empty();
+				$('#analytics').hide();
+				$.ajax({
+					url: "/projects/single_review",
+					type: "POST",
+					data: data,
+					cache: false,
+					processData: false,
+					contentType: false,
+					success: function(data) {
+						$("#analytics").show();
+						var parsedData = JSON.parse(data);
+						if(parsedData.compound < 0) {
+							$("#analytics").append(`<h4>Negative</h4>`);
+						} else if(parsedData.compound > 0) {
+							$("#analytics").append(`<h4>Positive</h4>`);
+						}
+						document.getElementsByClassName("m-form")[0].reset();
+						swal(data);
+					}
+				});
+				return false;
 			}
-		});
-		return false;
-	}
 		
 		$(function() {
 			$('.m-form').submit(uploadAjax);
