@@ -104,7 +104,7 @@
 					<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark " m-menu-vertical="1" m-menu-scrollable="1" m-menu-dropdown-timeout="500" style="position: relative;">
 						<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
 							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'index' %}" class="m-menu__link "><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Dashboard</span>
-											<span class="m-menu__link-badge"><span class="m-badge m-badge--danger">2</span></span> </span></span></a></li>
+											<span class="m-menu__link-badge"></span> </span></span></a></li>
 							<li class="m-menu__section ">
 								<h4 class="m-menu__section-text">Components</h4>
 								<i class="m-menu__section-icon flaticon-more-v2"></i>
@@ -147,62 +147,63 @@
                     {% if project%}
 					<div class="m-content">
 						<div class="row">
-							
-							<div class="col-xl-12">
+							<div class="col-xl-6">
 
-								<!--begin::Portlet-->
-								<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+								
+								
+
+								
+
+								
+								<div class="m-portlet m-portlet--tabs">
 									<div class="m-portlet__head">
 										<div class="m-portlet__head-caption">
 											<div class="m-portlet__head-title">
 												<h3 class="m-portlet__head-text">
-													Manage Project
+													Portlet Tabs <small>with metronic icons</small>
 												</h3>
 											</div>
-                                        </div>
-                                        
+										</div>
 										<div class="m-portlet__head-tools">
-											<ul class="nav nav-tabs m-tabs m-tabs-line  m-tabs-line--right" role="tablist">
+											<ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
 												<li class="nav-item m-tabs__item">
-													<a class="nav-link m-tabs__link" href="{% url 'projectchart' project.id %}">
-														Tab 1
+													<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_portlet_tab_2_1" role="tab">
+														<i class="flaticon-share"></i>
+														Logs
 													</a>
 												</li>
-												<li class="nav-item m-tabs__item">
-													<a class="nav-link m-tabs__link active" href="{% url 'projectdetail' project.id %}" >
-														Tab 2
-													</a>
+												<li class="nav-item dropdown m-tabs__item">
+													<a class="nav-link m-tabs__link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true"><i class="flaticon-placeholder"></i> Settings</a>
+													<div class="dropdown-menu dropdown-menu-right">
+														<a class="dropdown-item" data-toggle="tab" href="#m_portlet_tab_2_2">Action</a>
+														<a class="dropdown-item" data-toggle="tab" href="#m_portlet_tab_2_3">Another action</a>
+														<a class="dropdown-item" data-toggle="tab" href="#m_portlet_tab_2_2">Something else here</a>
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" data-toggle="tab" href="#m_portlet_tab_2_3">Separated link</a>
+													</div>
 												</li>
-												
 											</ul>
 										</div>
-                                    </div>
-                                    
-									<div class="m-portlet__body" style="min-height: 300px;">
+									</div>
+									<div class="m-portlet__body">
 										<div class="tab-content">
-											<div class="tab-pane active" id="m_tabs_7_1" role="tabpanel">
-                                                <p>Project Detail</p>
-                                                <p>{{ project.name}}</p>
+											<div class="tab-pane active" id="m_portlet_tab_2_1">
+												Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum has been
+												the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
 											</div>
-										
-											
+											<div class="tab-pane " id="m_portlet_tab_2_2">
+												Lorem Ipsum is simply dummy text of the printing and typesetting industry. printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+												scrambled.
+											</div>
+											<div class="tab-pane " id="m_portlet_tab_2_3">
+												Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply
+												dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+											</div>
 										</div>
-                                    </div>
-                                
+									</div>
 								</div>
-
-								<!--end::Portlet-->
-
-								
-								
-
-								<!--end::Portlet-->
-
-								<!--begin::Portlet-->
-								
-
-								<!--end::Portlet-->
 							</div>
+							
 						</div>
 					</div>
 					{% endif %}
