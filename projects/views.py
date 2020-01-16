@@ -6,7 +6,7 @@ from .models import Project
 from .forms import ProjectForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .vader import sentiment_scores
+from .vader import sentiment_score
 from .rating_model import rate_review
 from .sentimentsAlgo import reviews_preprocessing, sentiment_scores, generate_particular_sentiments
 
@@ -76,8 +76,9 @@ def single_review(request):
     if request.method == 'POST':
         sentence = request.POST['sentence']
         rating = rate_review(sentence)
-        sentiment_dict = sentiment_scores(sentence)
+        sentiment_dict = sentiment_score(sentence)
         response = {'sentiment': sentiment_dict, 'rating': rating}
+        print(response)
 
         return HttpResponse(json.dumps(response))
     else:
