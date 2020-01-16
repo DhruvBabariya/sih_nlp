@@ -7,6 +7,7 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 
 filePathJson = os.path.join(BASE, "temp.json")
 
+
 def reviews_preprocessing(filePathJson, key):
     fileContent = open(filePathJson)
     reviews = []
@@ -57,10 +58,3 @@ def generate_particular_sentiments(review_sentiment_scores):
         elif(value['compound'] <= -0.05):
             num_of_tweets_for_sentiment['negative'] += 1
     return sentiments_dict, num_of_tweets_for_sentiment
-
-
-# reviews_list = reviews_preprocessing(filePathJson, 'reviewText')
-# scores = sentiment_scores(reviews_list)
-# result, total = generate_particular_sentiments(scores)
-# print(result)
-# print(total)
