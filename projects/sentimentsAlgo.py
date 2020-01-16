@@ -3,11 +3,6 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from textblob import TextBlob
 import os
 
-BASE = os.path.dirname(os.path.abspath(__file__))
-
-filePathJson = os.path.join(BASE, "temp.json")
-
-
 def reviews_preprocessing(filePathJson, key):
     fileContent = open(filePathJson)
     reviews = []

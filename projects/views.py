@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .vader import sentiment_score
 from .rating_model import rate_review
 from .sentimentsAlgo import reviews_preprocessing, sentiment_scores, generate_particular_sentiments
-
+from .word_cloud import generate_word_cloud
 
 @login_required(login_url='/login')
 def projects(request):
@@ -39,11 +39,10 @@ def createproject(request):
         }
         return render(request, 'projects/createproject.html', context)
 
-
 def data(request, pk):
     project = get_object_or_404(Project, pk=pk, user=request.user)
     querysets = Project.objects.filter(pk=pk, user=request.user)
-    filename = querysets.values('document')[0]['document'].split('/')[1]
+    filename = querysets.values('document')[0]['document']
     file = os.path.join(settings.MEDIA_ROOT, filename)
     reviews_list = reviews_preprocessing(file, 'reviewText')
     scores = sentiment_scores(reviews_list)
