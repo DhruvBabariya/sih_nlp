@@ -75,10 +75,10 @@ def projectdetail(request, pk):
 def single_review(request):
     if request.method == 'POST':
         sentence = request.POST['sentence']
+        sentence = ''.join(sentence.split('\n'))
         rating = rate_review(sentence)
         sentiment_dict = sentiment_score(sentence)
         response = {'sentiment': sentiment_dict, 'rating': rating}
-        print(response)
 
         return HttpResponse(json.dumps(response))
     else:
