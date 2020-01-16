@@ -13,14 +13,7 @@
 
 		<!--begin::Web font -->
 		<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
-		<script>
-			WebFont.load({
-            google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
-            active: function() {
-                sessionStorage.fonts = true;
-            }
-          });
-        </script>
+		
 
 		<!--end::Web font -->
 
@@ -29,7 +22,7 @@
 
 		<!--RTL version:<link href="../assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
 		<link href="{% static 'assets/demo/default/base/style.bundle.css' %}" rel="stylesheet" type="text/css" />
-
+		<link href="{% static 'assets/demo/default/base/custom.css' %}" rel="stylesheet" type="text/css" />
 		<!--RTL version:<link href="../assets/demo/default/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
 
 		<!--end::Global Theme Styles -->
@@ -160,7 +153,7 @@
 											<ul class="nav nav-tabs m-tabs m-tabs-line  m-tabs-line--right" role="tablist">
 												<li class="nav-item m-tabs__item">
 													<a class="nav-link m-tabs__link active" href="{% url 'projectchart' project.id %}" >
-														Tab 1
+														Graph
 													</a>
 												</li>
 												<li class="nav-item m-tabs__item">
@@ -176,8 +169,59 @@
 									<div class="m-portlet__body" style="min-height: 300px;">
 										<div class="tab-content">
 											<div class="tab-pane active" id="m_tabs_7_1" role="tabpanel">
-                                                <p>Project Chart</p>
-                                                <p>{{ project.name}}</p>
+                                                <div class="row">
+                                                	<div class="col-md-12">
+                                                		<div class="m-widget16">
+															<div class="row">
+																<div class="col-md-12">
+																	<h4 class="fw-800">No. of Reviews according to Sentiment</h4>
+																	<div class="m-widget16__stats">
+																		<div class="m-widget16__visual" id="donutChart">
+																			<div id="mydonut" style="height: 220px">
+																			</div>
+																		</div>
+																		<div class="m-widget16__legends">
+																			<div class="m-widget16__legend">
+																				<span class="m-widget16__legend-bullet m--bg-success"></span>
+																				<span class="m-widget16__legend-text positive_donut"></span>
+																			</div>
+																			<div class="m-widget16__legend">
+																				<span class="m-widget16__legend-bullet m--bg-warning"></span>
+																				<span class="m-widget16__legend-text neutral_donut"></span>
+																			</div>
+																			<div class="m-widget16__legend">
+																				<span class="m-widget16__legend-bullet m--bg-danger"></span>
+																				<span class="m-widget16__legend-text negative_donut"></span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														
+                                                	</div>
+                                                	<!--end of donut div-->
+                                                </div>
+                                                <div class="row pt-60">
+	                                                <div class="col-md-6">
+	                                                		<h4 class="fw-800">Trend of Positive Reviews</h4>
+	                                                		<canvas id="posline"></canvas>
+	                                            	</div>
+	                                            	<div class="col-md-6">
+	                                                		<h4 class="fw-800">Trend of Neutral Reviews</h4>
+	                                                		<canvas id="neuline"></canvas>
+	                                            	</div>
+	                                            </div>
+	                                            <div class="row pt-60">
+	                                                <div class="col-md-6">
+	                                                		<h4 class="fw-800">Trend of Negative Reviews</h4>
+	                                                		<canvas id="negline"></canvas>
+	                                            	</div>
+	                                            	<div class="col-md-6">
+	                                                		<h4 class="fw-800">Comparison of Reviews</h4>
+	                                                		<canvas id="pnline"></canvas>
+	                                            	</div>
+	                                            </div>
 											</div>
 										
 											
@@ -247,6 +291,198 @@
 		<!--begin::Page Scripts -->
 		<script src="{% static 'assets/app/js/dashboard.js' %}" type="text/javascript"></script>
 		<!--end::Page Scripts -->
+		<script>
+			var vaderData = {{ sentiment_list|safe }}
+			var numReviews = {{ num_of_reviews_sentiment|safe }}
+			console.log(vaderData);
+			var posList = vaderData.positive.map(x => Math.round(x*10000)/100);
+			var neuList = vaderData.neutral.map(x => Math.round(x*10000)/100);
+			var negList = vaderData.negative.map(x => Math.round(x*10000)/100);
+			console.log(posList)
+			$("#mydonut").length&&Morris.Donut( {
+                element:"mydonut", data:[ {
+                    label: "Positive", value: numReviews['positive']
+                }
+                , {
+                    label: "Negative", value: numReviews['negative']
+                }
+                , {
+                    label: "Neutral", value: numReviews['neutral']
+                }
+                ], labelColor:"#a7a7c2", colors:[mApp.getColor("success"), mApp.getColor("danger"), mApp.getColor("warning")]
+            }
+			),
+			$(".positive_donut").html(numReviews["positive"]+" Positive Review(s)");
+			$(".neutral_donut").html(numReviews["neutral"]+" Neutral Review(s)");
+			$(".negative_donut").html(numReviews["negative"]+" Negative Review(s)");
+
+			var ctxpos = $("#posline");
+			var ctxneu = $("#neuline");
+			var ctxneg = $("#negline");
+			var ctxpn = $("#pnline");
+			var lc1 = new Chart(ctxpos, {
+			    type: 'line',
+			    
+			    data: {
+			    	labels:posList,
+			    	datasets:[{
+			    		label : 'Positive Reviews',
+			    		data: posList,
+			    		backgroundColor: "rgb(52,191,163,0.4)",
+				        borderColor: "darkgreen",
+				        fill: true,
+				        lineTension: 0,
+				        radius: 4
+
+			    	}]
+			    },
+			    options:{
+			    	scales:{
+			    		xAxes:[
+			    			{
+			    				display:false
+			    			}
+			    		]
+			    	},
+			    	layout: {
+			            padding: {
+			                left: 0,
+			                right: 5,
+			                top: 0,
+			                bottom: 0
+			            }
+			        }
+
+			    }
+			});
+			var lc2 = new Chart(ctxneu, {
+			    type: 'line',
+			    
+			    data: {
+			    	labels:neuList,
+			    	datasets:[{
+			    		label : 'Neutral Reviews',
+			    		data: neuList,
+			    		backgroundColor: "rgb(255, 184, 34,0.4)",
+				        borderColor: "orange",
+				        fill: true,
+				        lineTension: 0,
+				        radius: 4
+
+			    	}]
+			    },
+			    options:{
+			    	scales:{
+			    		xAxes:[
+			    			{
+			    				display:false
+			    			}
+			    		]
+			    	},
+			    	layout: {
+			            padding: {
+			                left: 0,
+			                right: 5,
+			                top: 0,
+			                bottom: 0
+			            }
+			        }
+
+			    }
+			});
+			var lc3 = new Chart(ctxneg, {
+			    type: 'line',
+			    
+			    data: {
+			    	labels:negList,
+			    	datasets:[{
+			    		label : 'Negative Reviews',
+			    		data: negList,
+			    		backgroundColor: "rgb(244, 81, 108,0.4)",
+				        borderColor: "red",
+				        fill: true,
+				        lineTension: 0,
+				        radius: 4
+
+			    	}]
+			    },
+			    options:{
+			    	scales:{
+			    		xAxes:[
+			    			{
+			    				display:false
+			    			}
+			    		]
+			    	},
+			    	layout: {
+			            padding: {
+			                left: 0,
+			                right: 5,
+			                top: 0,
+			                bottom: 0
+			            }
+			        }
+
+			    }
+			});
+			var lc4 = new Chart(ctxpn, {
+			    type: 'line',
+			    
+			    data: {
+			    	labels:negList,
+			    	datasets:[
+			    	{
+			    		label : 'Positive Reviews',
+			    		data: posList,
+			    		backgroundColor: "rgb(52,191,163,0.4)",
+				        borderColor: "darkgreen",
+				        fill: false,
+				        lineTension: 0,
+				        radius: 4
+				    },
+				    {
+			    		label : 'Neutral Reviews',
+			    		data: neuList,
+			    		backgroundColor: "rgb(255, 184, 34,0.4)",
+				        borderColor: "orange",
+				        fill: false,
+				        lineTension: 0,
+				        radius: 4
+
+			    	},
+			    	{
+			    		label : 'Negative Reviews',
+			    		data: negList,
+			    		backgroundColor: "rgb(244, 81, 108,0.4)",
+				        borderColor: "red",
+				        fill: false,
+				        lineTension: 0,
+				        radius: 4
+
+			    	}
+
+			    	]
+			    },
+			    options:{
+			    	scales:{
+			    		xAxes:[
+			    			{
+			    				display:false
+			    			}
+			    		]
+			    	},
+			    	layout: {
+			            padding: {
+			                left: 0,
+			                right: 5,
+			                top: 0,
+			                bottom: 0
+			            }
+			        }
+
+			    }
+			});
+		</script>
 	</body>
 
 	<!-- end::Body -->

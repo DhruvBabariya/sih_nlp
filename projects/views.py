@@ -54,7 +54,7 @@ def data(request, pk):
         'sentiment_list': sentiment_list,
         'num_of_reviews_sentiment': num_of_reviews_sentiment
     }
-
+    print(context)
     return context
 
 
