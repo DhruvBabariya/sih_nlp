@@ -91,3 +91,7 @@ def single_review(request):
         return HttpResponse(json.dumps(response))
     else:
         return render(request, 'projects/single_review.html')
+
+@login_required(login_url='/login')
+def projectcontext(request):
+    return render(request, 'projects/projectcontext.html')
