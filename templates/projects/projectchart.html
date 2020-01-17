@@ -54,7 +54,7 @@
 							<div class="m-stack m-stack--ver m-stack--general">
 								<div class="m-stack__item m-stack__item--middle m-brand__logo">
 									<a href="index.html" class="m-brand__logo-wrapper">
-										<img alt="" src="{% static 'assets/demo/default/media/img/logo/logo_default_dark.png' %}" />
+										<img style="width: 133px;" alt=""  src="{% static 'assets/demo/default/media/img/logo/mylogo.png' %}">
 									</a>
 								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -111,6 +111,10 @@
 									</ul>
 								</div>
 							</li>
+							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'index'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Single Review</span>
+											<span class="m-menu__link-badge"></span> </span></span></a></li>
+										<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'index'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Logout</span>
+											<span class="m-menu__link-badge"></span> </span></span></a></li>
 							
 							
 						</ul>
@@ -292,13 +296,20 @@
 		<script src="{% static 'assets/app/js/dashboard.js' %}" type="text/javascript"></script>
 		<!--end::Page Scripts -->
 		<script>
-			var vaderData = {{ sentiment_list|safe }}
+			//var vaderData = {{ sentiment_list|safe }}
 			var numReviews = {{ num_of_reviews_sentiment|safe }}
-			console.log(vaderData);
-			var posList = vaderData.positive.map(x => Math.round(x*10000)/100);
-			var neuList = vaderData.neutral.map(x => Math.round(x*10000)/100);
-			var negList = vaderData.negative.map(x => Math.round(x*10000)/100);
-			console.log(posList)
+			var partionedData = {{ partitionend_sentiments_dict|safe }}
+			
+			console.log(partionedData);
+
+			var posList = Object.values(partionedData['positive']);
+			var neuList = Object.values(partionedData['neutral']);
+			var negList = Object.values(partionedData['negative']);
+			var glabel = ['0-9','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80-89','90-100']
+			// var posList = vaderData.positive.map(x => Math.round(x*10000)/100);
+			// var neuList = vaderData.neutral.map(x => Math.round(x*10000)/100);
+			// var negList = vaderData.negative.map(x => Math.round(x*10000)/100);
+			//console.log(Object.values(posList))
 			$("#mydonut").length&&Morris.Donut( {
                 element:"mydonut", data:[ {
                     label: "Positive", value: numReviews['positive']
@@ -321,167 +332,88 @@
 			var ctxneg = $("#negline");
 			var ctxpn = $("#pnline");
 			var lc1 = new Chart(ctxpos, {
-			    type: 'line',
+			    type: 'bar',
 			    
 			    data: {
-			    	labels:posList,
+			    	labels:glabel,
 			    	datasets:[{
 			    		label : 'Positive Reviews',
 			    		data: posList,
 			    		backgroundColor: "rgb(52,191,163,0.4)",
-				        borderColor: "darkgreen",
-				        fill: true,
-				        lineTension: 0,
-				        radius: 4
-
+				        borderColor: "rgb(52,191,163)",
+				        borderWidth: 2,
+				        
 			    	}]
 			    },
-			    options:{
-			    	scales:{
-			    		xAxes:[
-			    			{
-			    				display:false
-			    			}
-			    		]
-			    	},
-			    	layout: {
-			            padding: {
-			                left: 0,
-			                right: 5,
-			                top: 0,
-			                bottom: 0
-			            }
-			        }
-
-			    }
+			    options:{}
 			});
 			var lc2 = new Chart(ctxneu, {
-			    type: 'line',
+			    type: 'bar',
 			    
 			    data: {
-			    	labels:neuList,
+			    	labels:glabel,
 			    	datasets:[{
 			    		label : 'Neutral Reviews',
 			    		data: neuList,
-			    		backgroundColor: "rgb(255, 184, 34,0.4)",
-				        borderColor: "orange",
-				        fill: true,
-				        lineTension: 0,
-				        radius: 4
-
+			    		backgroundColor: "rgb(255,184,34,0.4)",
+				        borderColor: "rgb(255,184,34)",
+				        borderWidth: 2,
+				        
 			    	}]
 			    },
-			    options:{
-			    	scales:{
-			    		xAxes:[
-			    			{
-			    				display:false
-			    			}
-			    		]
-			    	},
-			    	layout: {
-			            padding: {
-			                left: 0,
-			                right: 5,
-			                top: 0,
-			                bottom: 0
-			            }
-			        }
-
-			    }
+			    options:{}
 			});
 			var lc3 = new Chart(ctxneg, {
-			    type: 'line',
+			    type: 'bar',
 			    
 			    data: {
-			    	labels:negList,
+			    	labels:glabel,
 			    	datasets:[{
 			    		label : 'Negative Reviews',
 			    		data: negList,
 			    		backgroundColor: "rgb(244, 81, 108,0.4)",
-				        borderColor: "red",
-				        fill: true,
-				        lineTension: 0,
-				        radius: 4
-
+				        borderColor: "rgb(244, 81, 108)",
+				        borderWidth: 2,
+				        
 			    	}]
 			    },
-			    options:{
-			    	scales:{
-			    		xAxes:[
-			    			{
-			    				display:false
-			    			}
-			    		]
-			    	},
-			    	layout: {
-			            padding: {
-			                left: 0,
-			                right: 5,
-			                top: 0,
-			                bottom: 0
-			            }
-			        }
-
-			    }
+			    options:{}
 			});
 			var lc4 = new Chart(ctxpn, {
-			    type: 'line',
+			    type: 'bar',
 			    
 			    data: {
-			    	labels:negList,
+			    	labels:glabel,
 			    	datasets:[
-			    	{
-			    		label : 'Positive Reviews',
-			    		data: posList,
-			    		backgroundColor: "rgb(52,191,163,0.4)",
-				        borderColor: "darkgreen",
-				        fill: false,
-				        lineTension: 0,
-				        radius: 4
-				    },
-				    {
-			    		label : 'Neutral Reviews',
-			    		data: neuList,
-			    		backgroundColor: "rgb(255, 184, 34,0.4)",
-				        borderColor: "orange",
-				        fill: false,
-				        lineTension: 0,
-				        radius: 4
-
-			    	},
-			    	{
-			    		label : 'Negative Reviews',
-			    		data: negList,
-			    		backgroundColor: "rgb(244, 81, 108,0.4)",
-				        borderColor: "red",
-				        fill: false,
-				        lineTension: 0,
-				        radius: 4
-
-			    	}
-
+				    	{
+				    		label : 'Positive Reviews',
+				    		data: posList,
+				    		backgroundColor: "rgb(52,191,163,0.4)",
+					        borderColor: "rgb(52,191,163)",
+					        borderWidth: 2,
+					        
+				    	},
+				    	{
+				    		label : 'Neutral Reviews',
+				    		data: neuList,
+				    		backgroundColor: "rgb(255,184,34,0.4)",
+					        borderColor: "rgb(255,184,34)",
+					        borderWidth: 2,
+					        
+				    	},
+				    	{
+				    		label : 'Negative Reviews',
+				    		data: negList,
+				    		backgroundColor: "rgb(244, 81, 108,0.4)",
+					        borderColor: "rgb(244, 81, 108)",
+					        borderWidth: 2,
+					        
+				    	}
 			    	]
 			    },
-			    options:{
-			    	scales:{
-			    		xAxes:[
-			    			{
-			    				display:false
-			    			}
-			    		]
-			    	},
-			    	layout: {
-			            padding: {
-			                left: 0,
-			                right: 5,
-			                top: 0,
-			                bottom: 0
-			            }
-			        }
-
-			    }
+			    options:{}
 			});
+			
 		</script>
 	</body>
 

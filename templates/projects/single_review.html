@@ -57,7 +57,7 @@
 							<div class="m-stack m-stack--ver m-stack--general">
 								<div class="m-stack__item m-stack__item--middle m-brand__logo">
 									<a href="index.html" class="m-brand__logo-wrapper">
-										<img alt="" src="../assets/demo/default/media/img/logo/logo_default_dark.png" />
+										<img style="width: 133px;" alt=""  src="{% static 'assets/demo/default/media/img/logo/mylogo.png' %}">
 									</a>
 								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -114,6 +114,10 @@
 									</ul>
 								</div>
 							</li>
+							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'index'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Single Review</span>
+											<span class="m-menu__link-badge"></span> </span></span></a></li>
+										<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'index'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Logout</span>
+											<span class="m-menu__link-badge"></span> </span></span></a></li>
 							
 							
 						</ul>

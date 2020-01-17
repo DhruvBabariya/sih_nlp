@@ -1,0 +1,10 @@
+{
+	"name": "Iliyas",
+	"age": 20,
+	"height": "6.0 ft",
+	"weight": "75 kg",
+	"data": [{
+		"aadhar": "aadhar-number",
+		"name": "x"
+	}]
+}

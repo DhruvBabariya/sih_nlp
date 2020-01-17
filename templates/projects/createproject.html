@@ -7,7 +7,7 @@
 	<!-- begin::Head -->
 	<head>
 		<meta charset="utf-8" />
-		<title>Metronic | Dashboard</title>
+		<title>Create Project</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 
@@ -61,7 +61,7 @@
 							<div class="m-stack m-stack--ver m-stack--general">
 								<div class="m-stack__item m-stack__item--middle m-brand__logo">
 									<a href="index.html" class="m-brand__logo-wrapper">
-										<img alt="" src="{% static 'assets/demo/default/media/img/logo/logo_default_dark.png' %} />
+										<img style="width: 133px;" alt=""  src="{% static 'assets/demo/default/media/img/logo/mylogo.png' %}">
 									</a>
 								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -104,7 +104,7 @@
 					<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark " m-menu-vertical="1" m-menu-scrollable="1" m-menu-dropdown-timeout="500" style="position: relative;">
 						<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
 							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'index'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Dashboard</span>
-											<span class="m-menu__link-badge"><span class="m-badge m-badge--danger">2</span></span> </span></span></a></li>
+											<span class="m-menu__link-badge"></span> </span></span></a></li>
 							<li class="m-menu__section ">
 								<h4 class="m-menu__section-text">Components</h4>
 								<i class="m-menu__section-icon flaticon-more-v2"></i>
@@ -118,6 +118,10 @@
 									</ul>
 								</div>
 							</li>
+							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'index'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Single Review</span>
+											<span class="m-menu__link-badge"></span> </span></span></a></li>
+							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'index'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Logout</span>
+											<span class="m-menu__link-badge"></span> </span></span></a></li>
 							
 							
 						</ul>
@@ -195,6 +199,7 @@
 												<input type="submit" class="btn btn-primary" value="submit">
 											</div>
 										</div>
+
 									</form>
 
 									<!--end::Form-->
@@ -217,7 +222,7 @@
 					<div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
 						<div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
 							<span class="m-footer__copyright">
-								2017 &copy; Metronic theme by <a href="https://keenthemes.com" class="m-link">Keenthemes</a>
+								2020 &copy;  SIH Project
 							</span>
 						</div>
 						
@@ -281,11 +286,11 @@
 						console.log(data);
 						document.getElementsByClassName("m-form")[0].reset();
 						document.querySelector('.custom-file-label').innerHTML = "Choose File";
-						alert('success');
+						swal("Good job!", "You created the project!", "success");
 					}
 				});
 				return false;
-			}
+					}
 				
 				$(function() {
 					$('.m-form').submit(upload);
