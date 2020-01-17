@@ -11,6 +11,7 @@ from .rating_model import rate_review
 from .sentimentsAlgo import reviews_preprocessing, sentiment_scores, generate_particular_sentiments
 from .word_cloud import generate_word_cloud
 
+
 @login_required(login_url='/login')
 def projects(request):
     querysets = Project.objects.filter(user=request.user)
@@ -39,34 +40,42 @@ def createproject(request):
         }
         return render(request, 'projects/createproject.html', context)
 
-def data(request, pk):
+
+def data(request, pk, key):
     project = get_object_or_404(Project, pk=pk, user=request.user)
     querysets = Project.objects.filter(pk=pk, user=request.user)
     filename = querysets.values('document')[0]['document']
     file = os.path.join(settings.MEDIA_ROOT, filename)
-    reviews_list = reviews_preprocessing(file, 'reviewText')
+    reviews_list = reviews_preprocessing(file, key)
     scores = sentiment_scores(reviews_list)
-    sentiment_list, num_of_reviews_sentiment = generate_particular_sentiments(
-        scores)
+    # sentiment_dict, num_of_reviews_sentiment = generate_particular_sentiments(
+    #     scores)
+    partitioned_sentiment_dict, num_of_reviews_sentiment = generate_particular_sentiments(
+        scores, 10)
 
     context = {
         'project': project,
-        'sentiment_list': sentiment_list,
+        # 'sentiment_dict': sentiment_dict,
+        'partitioned_sentiment_dict': partitioned_sentiment_dict,
         'num_of_reviews_sentiment': num_of_reviews_sentiment
     }
-    print(context)
+
     return context
 
 
 @login_required(login_url='/login')
 def projectchart(request, pk):
-    context = data(request, pk)
+    querysets = Project.objects.filter(pk=pk, user=request.user)
+    key = querysets.values('key')[0]['key']
+    context = data(request, pk, key)
     return render(request, 'projects/projectchart.html', context)
 
 
 @login_required(login_url='/login')
 def projectdetail(request, pk):
-    context = data(request, pk)
+    querysets = Project.objects.filter(pk=pk, user=request.user)
+    key = querysets.values('key')[0]['key']
+    context = data(request, pk, key)
     return render(request, 'projects/projectdetail.html', context)
 
 
