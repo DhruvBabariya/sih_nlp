@@ -50,15 +50,16 @@ def data(request, pk, key):
     scores = sentiment_scores(reviews_list)
     # sentiment_dict, num_of_reviews_sentiment = generate_particular_sentiments(
     #     scores)
-    partitionend_sentiments_list, num_of_reviews_sentiment = generate_particular_sentiments(
+    partitioned_sentiment_dict, num_of_reviews_sentiment = generate_particular_sentiments(
         scores, 10)
 
     context = {
         'project': project,
         # 'sentiment_dict': sentiment_dict,
-        'partitionend_sentiments_list': partitionend_sentiments_list,
+        'partitioned_sentiment_dict': partitioned_sentiment_dict,
         'num_of_reviews_sentiment': num_of_reviews_sentiment
     }
+
     return context
 
 
