@@ -107,7 +107,11 @@
 							</li>
 							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'single_review'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Single Review</span>
 											<span class="m-menu__link-badge"></span> </span></span></a></li>
-							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'index'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Logout</span>
+											<form action="{% url 'logout' %}" id="logout" method="post">
+												{% csrf_token %}
+												<input type="hidden">
+											</form>
+							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a style="cursor:pointer;" onclick="logout()" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Logout</span>
 											<span class="m-menu__link-badge"></span> </span></span></a></li>
 							
 						</ul>
@@ -408,6 +412,12 @@
 			});
 			
 		</script>
+
+		<script>
+		function logout() {
+			document.getElementById('logout').submit();
+		}
+	</script>
 	</body>
 
 	<!-- end::Body -->
