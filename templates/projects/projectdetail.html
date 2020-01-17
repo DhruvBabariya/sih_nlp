@@ -152,7 +152,7 @@
 										<div class="m-portlet__head-caption">
 											<div class="m-portlet__head-title">
 												<h3 class="m-portlet__head-text">
-													Manage Project
+													{{project.name}}
 												</h3>
 											</div>
                                         </div>
@@ -161,12 +161,12 @@
 											<ul class="nav nav-tabs m-tabs m-tabs-line  m-tabs-line--right" role="tablist">
 												<li class="nav-item m-tabs__item">
 													<a class="nav-link m-tabs__link" href="{% url 'projectchart' project.id %}">
-														Tab 1
+														Overall
 													</a>
 												</li>
 												<li class="nav-item m-tabs__item">
 													<a class="nav-link m-tabs__link active" href="{% url 'projectdetail' project.id %}" >
-														Tab 2
+														Categorized
 													</a>
 												</li>
 												
