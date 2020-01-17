@@ -48,12 +48,15 @@ def data(request, pk, key):
     file = os.path.join(settings.MEDIA_ROOT, filename)
     reviews_list = reviews_preprocessing(file, key)
     scores = sentiment_scores(reviews_list)
-    sentiment_list, num_of_reviews_sentiment = generate_particular_sentiments(
-        scores)
+    # sentiment_dict, num_of_reviews_sentiment = generate_particular_sentiments(
+    #     scores)
+    partitionend_sentiments_list, num_of_reviews_sentiment = generate_particular_sentiments(
+        scores, 10)
 
     context = {
         'project': project,
-        'sentiment_list': sentiment_list,
+        # 'sentiment_dict': sentiment_dict,
+        'partitionend_sentiments_list': partitionend_sentiments_list,
         'num_of_reviews_sentiment': num_of_reviews_sentiment
     }
     return context
