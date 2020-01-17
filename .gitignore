@@ -12,3 +12,4 @@ venv
 venv/
 db.sqlite3
 compressed_model_ratings.ftz
+media
