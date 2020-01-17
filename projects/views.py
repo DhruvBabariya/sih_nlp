@@ -56,7 +56,7 @@ def data(request, pk, key):
     context = {
         'project': project,
         # 'sentiment_dict': sentiment_dict,
-        'partitioned_sentiment_dict': partitioned_sentiment_dict,
+        'partitionend_sentiments_dict': partitioned_sentiment_dict,
         'num_of_reviews_sentiment': num_of_reviews_sentiment
     }
 
