@@ -96,6 +96,7 @@ def single_review(request):
 
 @login_required(login_url='/login')
 def projectcontext(request, pk):
+    project = get_object_or_404(Project, pk=pk, user=request.user)
     querysets = Project.objects.filter(pk=pk, user=request.user)
     key = querysets.values('key')[0]['key']
     file = querysets.values('document')[0]['document']
@@ -106,7 +107,9 @@ def projectcontext(request, pk):
     accuracy = round(
         (predicted_average_rating / original_average_rating) * 100, 2)
 
+    print(querysets.values('name'))
     context = {
+        'project': project,
         'original_average_rating': original_average_rating,
         'predicted_average_rating': predicted_average_rating,
         'accuracy': accuracy,

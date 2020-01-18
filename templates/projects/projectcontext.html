@@ -7,7 +7,7 @@
 	<!-- begin::Head -->
 	<head>
 		<meta charset="utf-8" />
-		<title>Project context</title>
+		<title>Ratings | Project Context</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 
@@ -29,6 +29,7 @@
 
 		<!--RTL version:<link href="../assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
 		<link href="{% static 'assets/demo/default/base/style.bundle.css' %}" rel="stylesheet" type="text/css" />
+		<link href="{% static 'assets/demo/default/base/custom.css' %}" rel="stylesheet" type="text/css" />
 
 		<!--RTL version:<link href="../assets/demo/default/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
 
@@ -141,49 +142,111 @@
 					</div>
 
 					 END: Subheader -->
+					{% if project %}
 					<div class="m-content">
 						<div class="row">
-							<div class="col-lg-12">
+							
+							<div class="col-xl-12">
 
 								<!--begin::Portlet-->
+								<div class="m-portlet m-portlet--tabs">
+									<div class="m-portlet__head">
+										<div class="m-portlet__head-caption">
+											<div class="m-portlet__head-title">
+												<h3 class="m-portlet__head-text fw-800">
+													{{project.name}}
+												</h3>
+											</div>
+										</div>
+										<div class="m-portlet__head-tools">
+											<ul class="nav nav-tabs m-tabs m-tabs-line   m-tabs-line--right m-tabs-line-danger" role="tablist">
+												<li class="nav-item m-tabs__item">
+													<a class="nav-link m-tabs__link" href="{% url 'projectchart' project.id %}">
+														Overall
+													</a>
+												</li>
+												<li class="nav-item m-tabs__item">
+													<a class="nav-link m-tabs__link active" href="{% url 'projectcontext' project.id %}">
+														Categorized
+													</a>
+												</li>
+												
+											</ul>
+										</div>
+									</div>
+									<div class="m-portlet__body">
+										<div class="tab-content">
+											<div class="tab-pane active" id="m_portlet_tab_1_2">
+												<!-- <div class="row m-row--full-height">
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<div class="m-portlet m-portlet--half-height m-portlet--border-bottom-brand ">
+															<div class="m-portlet__body">
+																<div class="m-widget26">
+																	<div class="m-widget26__number">
+																		570
+																		<small>All Sales</small>
+																	</div>
+																	<div class="m-widget26__chart" style="height:90px; width: 220px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+																		<canvas id="m_chart_quick_stats_1" width="220" height="110" class="chartjs-render-monitor" style="display: block; width: 150px; height: 110px;"></canvas>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="m--space-30"></div>
+														<div class="m-portlet m-portlet--half-height m-portlet--border-bottom-danger ">
+															<div class="m-portlet__body">
+																<div class="m-widget26">
+																	<div class="m-widget26__number">
+																		690
+																		<small>All Orders</small>
+																	</div>
+																	<div class="m-widget26__chart" style="height:90px; width: 220px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+																		<canvas id="m_chart_quick_stats_2" width="220" height="110" class="chartjs-render-monitor" style="display: block; width: 150px; height: 110px;"></canvas>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-sm-12 col-md-12 col-lg-6">
+														<div class="m-portlet m-portlet--half-height m-portlet--border-bottom-success ">
+															<div class="m-portlet__body">
+																<div class="m-widget26">
+																	<div class="m-widget26__number">
+																		230
+																		<small>All Transactions</small>
+																	</div>
+																	<div class="m-widget26__chart" style="height:90px; width: 220px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+																		<canvas id="m_chart_quick_stats_3" width="220" height="110" class="chartjs-render-monitor" style="display: block; width: 150px; height: 110px;"></canvas>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="m--space-30"></div>
+														<div class="m-portlet m-portlet--half-height m-portlet--border-bottom-accent ">
+															<div class="m-portlet__body">
+																<div class="m-widget26">
+																	<div class="m-widget26__number">
+																		470
+																		<small>All Comissions</small>
+																	</div>
+																	<div class="m-widget26__chart" style="height:90px; width: 220px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+																		<canvas id="m_chart_quick_stats_4" width="220" height="110" class="chartjs-render-monitor" style="display: block; width: 150px; height: 110px;"></canvas>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div> -->
+												<div class="row">
+													<div class="col-xl-12">
+
+								<!--begin:: Widgets/Finance Summary-->
 								<div class="m-portlet">
 									<div class="m-portlet__head">
 										<div class="m-portlet__head-caption">
 											<div class="m-portlet__head-title">
-												<span class="m-portlet__head-icon m--hide">
-													<i class="la la-gear"></i>
-												</span>
-												<h3 class="m-portlet__head-text">
-													Heading
-												</h3>
-											</div>
-										</div>
-									</div>
-
-						
-
-								
-
-									<!--begin::Form-->
-									
-
-									<!--end::Form-->
-								</div>
-
-								<!--end::Portlet-->
-							</div>
-							
-						</div>
-						<div class="row">
-							<div class="col-xl-6">
-
-								<!--begin:: Widgets/Finance Summary-->
-								<div class="m-portlet m-portlet--full-height m-portlet--fit ">
-									<div class="m-portlet__head">
-										<div class="m-portlet__head-caption">
-											<div class="m-portlet__head-title">
-												<h3 class="m-portlet__head-text">
-													Finance Summary
+												<h3 class="m-portlet__head-text fw-800">
+													Comparison
 												</h3>
 											</div>
 										</div>
@@ -205,44 +268,39 @@
 									<div class="m-portlet__body">
 										<div class="tab-content">
 											<div class="tab-pane active">
-												<div class="m-widget12 m-widget12--chart-bottom m--margin-top-10" style="min-height: 450px">
+												<div class="m-widget12 m-widget12--chart-bottom m--margin-top-10">
 													<div class="m-widget12__item">
-														<span class="m-widget12__text1">Annual Companies Taxes EMS<br><span>$500,000</span></span>
-														<span class="m-widget12__text2">Next Tax Review Date<br><span>July 24,2017</span></span>
+														<span class="m-widget12__text1">Average Rating(Dataset)<br><span>{{original_average_rating}}/5</span></span>
+														<span class="m-widget12__text2">Average Rating(Predicted)<br><span>{{predicted_average_rating}}/5</span></span>
 													</div>
 													<div class="m-widget12__item">
-														<span class="m-widget12__text1">Avarage Product Price<br><span>$60,70</span></span>
+														<span class="m-widget12__text1">Number of Reviews<br><span>{{num_of_reviews}}</span></span>
 														<div class="m-widget12__text2">
-															<div class="m-widget12__desc">Satisfication Rate</div>
+															<div class="m-widget12__desc">Accuracy</div>
 															<br>
 															<div class="m-widget12__progress">
-																<div class="m-widget12__progress-sm progress m-progress--sm">
-																	<div class="m-widget12__progress-bar progress-bar bg-brand" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-																</div>
 																<span class="m-widget12__stats">
-																	63%
+																	{{accuracy}}%
 																</span>
 															</div>
 														</div>
 													</div>
-													<div class="m-widget12__chart m-portlet-fit--sides" style="height:290px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-														<canvas id="m_chart_finance_summary" width="502" height="290" class="chartjs-render-monitor" style="display: block; width: 502px; height: 290px;"></canvas>
-													</div>
+													
 												</div>
 											</div>
-											<div class="tab-pane">
-											</div>
+											<!-- <div class="tab-pane">
+											</div> -->
 										</div>
 									</div>
 								</div>
 
 								<!--end:: Widgets/Finance Summary-->
-							</div>
-							<div class="col-xl-6">
+													</div>
+							
+													<!-- <div class="col-xl-6">
 
-								<!--begin:: Widgets/Support Requests-->
-								<div class="m-portlet  m-portlet--full-height ">
-									<div class="m-portlet__head">
+														<div class="m-portlet  m-portlet--full-height ">
+															<div class="m-portlet__head">
 										<div class="m-portlet__head-caption">
 											<div class="m-portlet__head-title">
 												<h3 class="m-portlet__head-text">
@@ -302,8 +360,8 @@
 												</li>
 											</ul>
 										</div>
-									</div>
-									<div class="m-portlet__body">
+															</div>
+															<div class="m-portlet__body">
 										<div class="m-widget16">
 											<div class="row">
 												<div class="col-md-5">
@@ -319,7 +377,7 @@
 													</div>
 													<div class="m-widget16__body">
 
-														<!--begin::widget item-->
+									
 														<div class="m-widget16__item">
 															<span class="m-widget16__date">
 																EPS
@@ -329,9 +387,9 @@
 															</span>
 														</div>
 
-														<!--end::widget item-->
+									
 
-														<!--begin::widget item-->
+									
 														<div class="m-widget16__item">
 															<span class="m-widget16__date">
 																PDO
@@ -341,9 +399,6 @@
 															</span>
 														</div>
 
-														<!--end::widget item-->
-
-														<!--begin::widget item-->
 														<div class="m-widget16__item">
 															<span class="m-widget16__date">
 																OPL Status
@@ -353,9 +408,6 @@
 															</span>
 														</div>
 
-														<!--end::widget item-->
-
-														<!--begin::widget item-->
 														<div class="m-widget16__item">
 															<span class="m-widget16__date">
 																Priority
@@ -365,9 +417,6 @@
 															</span>
 														</div>
 
-														<!--end::widget item-->
-
-														<!--begin::widget item-->
 														<div class="m-widget16__item">
 															<span class="m-widget16__date">
 																Net Prifit
@@ -377,7 +426,6 @@
 															</span>
 														</div>
 
-														<!--end::widget item-->
 													</div>
 												</div>
 												<div class="col-md-7">
@@ -405,21 +453,40 @@
 												</div>
 											</div>
 										</div>
+															</div>
+														</div>
+
+								
+													</div> -->
+												</div>
+											</div>
+											
+										</div>
 									</div>
 								</div>
 
-								<!--end:: Widgets/Support Requests-->
+								<!--end::Portlet-->
+
+								
+								
+
+								<!--end::Portlet-->
+
+								<!--begin::Portlet-->
+								
+
+								<!--end::Portlet-->
 							</div>
 						</div>
 					</div>
-					
+					{% endif %}
 				</div>
 			</div>
 
 			<!-- end:: Body -->
 
 			<!-- begin::Footer -->
-			<footer class="m-grid__item		m-footer ">
+			<footer class="m-grid__item	m-footer ">
 				<div class="m-container m-container--fluid m-container--full-height m-page__container">
 					<div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
 						<div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">

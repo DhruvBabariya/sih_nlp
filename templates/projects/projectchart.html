@@ -7,7 +7,7 @@
 	<!-- begin::Head -->
 	<head>
 		<meta charset="utf-8" />
-		<title>Metronic | Dashboard</title>
+		<title>Ratings | Project Chart</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 
@@ -140,11 +140,11 @@
 							<div class="col-xl-12">
 
 								<!--begin::Portlet-->
-								<div class="m-portlet m-portlet--tabs m-portlet--success m-portlet--head-solid-bg m-portlet--head-sm">
+								<div class="m-portlet m-portlet--tabs">
 									<div class="m-portlet__head">
 										<div class="m-portlet__head-caption">
 											<div class="m-portlet__head-title">
-												<h3 class="m-portlet__head-text">
+												<h3 class="m-portlet__head-text fw-800">
 													{{project.name}}
 												</h3>
 											</div>
@@ -158,7 +158,7 @@
 													</a>
 												</li>
 												<li class="nav-item m-tabs__item">
-													<a class="nav-link m-tabs__link" href="{% url 'projectdetail' project.id %}">
+													<a class="nav-link m-tabs__link" href="{% url 'projectcontext' project.id %}">
 														Categorized
 													</a>
 												</li>
