@@ -10,6 +10,7 @@ from .vader import sentiment_score
 from .rating_model import rate_review
 from .sentimentsAlgo import reviews_preprocessing, sentiment_scores, generate_particular_sentiments
 from .word_cloud import generate_word_cloud
+from .rating_prediction import predict_rating_dataset, original_rating_dataset
 
 
 @login_required(login_url='/login')
@@ -92,6 +93,25 @@ def single_review(request):
     else:
         return render(request, 'projects/single_review.html')
 
+
 @login_required(login_url='/login')
-def projectcontext(request):
-    return render(request, 'projects/projectcontext.html')
+def projectcontext(request, pk):
+    querysets = Project.objects.filter(pk=pk, user=request.user)
+    key = querysets.values('key')[0]['key']
+    file = querysets.values('document')[0]['document']
+    filename = os.path.join(settings.MEDIA_ROOT, file)
+    original_average_rating, num_of_reviews = original_rating_dataset(
+        filename, 'overall')
+    predicted_average_rating = predict_rating_dataset(filename, key)
+    accuracy = round(
+        (predicted_average_rating / original_average_rating) * 100, 2)
+
+    context = {
+        'original_average_rating': original_average_rating,
+        'predicted_average_rating': predicted_average_rating,
+        'accuracy': accuracy,
+        'num_of_reviews': num_of_reviews
+    }
+    print(context)
+
+    return render(request, 'projects/projectcontext.html', context)

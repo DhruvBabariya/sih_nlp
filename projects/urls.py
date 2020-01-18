@@ -8,5 +8,5 @@ urlpatterns = [
    path('project/<int:pk>/chart',views.projectchart,name='projectchart'),
    path('project/<int:pk>/detail',views.projectdetail,name='projectdetail'),
    path('single_review',views.single_review,name='single_review'),
-   path('context',views.projectcontext, name='context')
+   path('project/<int:pk>/context',views.projectcontext,name='projectcontext'),
 ]
