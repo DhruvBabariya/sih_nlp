@@ -50,7 +50,7 @@ def register(request):
                 'user_form': user_form,
                 'company_form': company_form
             }
-            return render(request, 'accounts/register.html',context=context)
+            return render(request, 'accounts/newregister.html',context=context)
 
 
 def login(request):
@@ -70,7 +70,7 @@ def login(request):
                 messages.error(request,'Invalid Username/Password')
                 return redirect('login')
         else:
-	        return render(request, 'accounts/login.html') #app_name/template_name.html
+	        return render(request, 'accounts/newlogin.html') #app_name/template_name.html
 
 @login_required(login_url='/login')
 def logout(request):
