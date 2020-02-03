@@ -94,4 +94,4 @@ def generate_particular_sentiments(review_sentiment_scores, parts):
 reviews = reviews_preprocessing(filePathJson, 'reviewText')
 scores = sentiment_scores(reviews)
 partitions, total = generate_particular_sentiments(scores, 10)
-print(partitions)
+

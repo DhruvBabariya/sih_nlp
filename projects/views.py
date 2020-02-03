@@ -106,6 +106,11 @@ def projectcontext(request, pk):
     predicted_average_rating = predict_rating_dataset(filename, key)
     accuracy = round(
         (predicted_average_rating / original_average_rating) * 100, 2)
+
+    aspects_dict = {}
+    for aspect in aspects_arr:
+        aspects_dict[aspect] = []
+
     result = get_aspects_list(file, 'reviewText', aspect={'battery': [], 'camera': [], 'screen': [], 'sound':[] })
     aspects_rating = give_aspect_rating(result)
 
