@@ -35,10 +35,10 @@ def getTweets(search_words, date_since, count):
 
     return tweets_on_topic
 
-tweets = getTweets('#indvsnz', '2020-02-01', 10)
-scores = sentiment_scores(tweets)
-partitions, total = generate_particular_sentiments(scores, 10)
-print(partitions)
-print(total)
+# tweets = getTweets('#indvsnz', '2020-02-01', 10)
+# scores = sentiment_scores(tweets)
+# partitions, total = generate_particular_sentiments(scores, 10)
+# print(partitions)
+# print(total)
 
 
