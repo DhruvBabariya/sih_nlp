@@ -9,4 +9,5 @@ urlpatterns = [
    path('project/<int:pk>/detail',views.projectdetail,name='projectdetail'),
    path('single_review',views.single_review,name='single_review'),
    path('project/<int:pk>/context',views.projectcontext,name='projectcontext'),
+
 ]

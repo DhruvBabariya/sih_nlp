@@ -287,20 +287,7 @@
 							<div class="form-group m-form__group row">
 							<div class="col-lg-12 m-form__group-sub">
 							<label class="form-control-label">Aspects:</label>
-							<div class="m-checkbox-inline">
-							<label class="m-checkbox m-checkbox--solid m-checkbox--brand">
-							<input type="checkbox" name="account_communication[]" checked value="email"> Email
-							<span></span>
-							</label>
-							<label class="m-checkbox m-checkbox--solid  m-checkbox--brand">
-							<input type="checkbox" name="account_communication[]" value="sms"> SMS
-							<span></span>
-							</label>
-							<label class="m-checkbox m-checkbox--solid  m-checkbox--brand">
-							<input type="checkbox" name="account_communication[]" value="phone"> Phone
-							<span></span>
-							</label>
-							</div>
+							{{ form.aspects|add_class:"form-control m-input"|attr:"placeholder:Enter aspects..."|attr:"id:aspects"|attr:"type:text" }}
 							</div>
 							</div>
 							</div>
@@ -318,9 +305,17 @@
 							<div class="m-portlet__foot m-portlet__foot--fit m--margin-top-40">
 							<div class="m-form__actions">
 							<div class="row">
-							<div class="col-lg-6"></div>
-							<div class="col-lg-6 m--align-right">
-							<a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon" data-wizard-action="submit">
+								<div class="col-lg-2"></div>
+							<div class="col-lg-4 m--align-left">
+								<button class="btn btn-secondary m-btn m-btn--custom m-btn--icon" data-wizard-action="prev">
+									<span>
+										<i class="la la-arrow-left"></i>&nbsp;&nbsp;
+										<span>Back</span>
+									</span>
+								</button>
+							</div>
+							<div class="col-lg-4 m--align-right">
+							<a href="#" id="submit" class="btn btn-primary m-btn m-btn--custom m-btn--icon" data-wizard-action="submit">
 							<span>
 							<i class="la la-check"></i>&nbsp;&nbsp;
 							<span>Submit</span>
@@ -417,25 +412,39 @@
 			function upload(event) {
 				event.preventDefault();
 				var data = new FormData($('.m-form').get(0));
-				
-				$.ajax({
-					url: "/projects/create/",
-					type: "POST",
-					data: data,
-					cache: false,
-					processData: false,
-					contentType: false,
-					success: function(data) {
-						console.log(data);
-						document.getElementsByClassName("m-form")[0].reset();
-						document.querySelector('.custom-file-label').innerHTML = "Choose File";
-					}
-				});
+				var name = data.get('name');
+				var description = data.get('description');
+				var key = data.get('key');
+				var file = !$('input[type="file"]').val();
+				var aspects = data.get("aspects");
+				if(name !== "" && description !== "" && key !== "" && !file && aspects !== "") {
+					$.ajax({
+						url: "/projects/create/",
+						type: "POST",
+						data: data,
+						cache: false,
+						processData: false,
+						contentType: false,
+						success: async function(data) {
+							console.log(data);
+							document.getElementsByClassName("m-form")[0].reset();
+							document.querySelector('.custom-file-label').innerHTML = "Choose File";
+							await swal({
+								type:'success',
+								title: 'Success',
+								text: "Project created successfully!"
+							})
+							window.location.href = "http://127.0.0.1:8000/projects/";
+						}
+					});
+				} else {
+					swal({type:'error', title:'OOPS :(', text: 'All Fields are mandatory'})
+				}
 				return false;
 					}
-				
+					
 				$(function() {
-					$('#next').click(upload);
+					$('#submit').click(upload);
 				});
 		</script>
 		<script>

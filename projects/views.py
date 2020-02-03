@@ -2,7 +2,7 @@ import json
 import os
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404, HttpResponse
 from django.conf import settings
-from .models import Project
+from .models import Project,ProjectResults
 from .forms import ProjectForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -16,6 +16,7 @@ from .rating_prediction import predict_rating_dataset, original_rating_dataset
 @login_required(login_url='/login')
 def projects(request):
     querysets = Project.objects.filter(user=request.user)
+    
     context = {
         'querysets': querysets
     }
@@ -67,9 +68,30 @@ def data(request, pk, key):
 @login_required(login_url='/login')
 def projectchart(request, pk):
     querysets = Project.objects.filter(pk=pk, user=request.user)
-    key = querysets.values('key')[0]['key']
-    context = data(request, pk, key)
-    return render(request, 'projects/projectchart.html', context)
+    queryset = querysets[0]
+    result = ProjectResults.objects.filter(project=queryset)
+   
+    if result:
+        
+        num_of_reviews_sentiment = {
+            "positive": result[0].positive,
+            "negative": result[0].negative,
+            "neutral": result[0].neutral
+        }
+        context = {
+            'project': queryset,
+            # 'sentiment_dict': sentiment_dict,
+            'partitionend_sentiments_dict': result[0].percentages,
+            'num_of_reviews_sentiment': num_of_reviews_sentiment
+        }
+
+        return render(request, 'projects/projectchart.html', context)
+    else:
+        key = querysets.values('key')[0]['key']
+        context = data(request, pk, key)
+        obj = ProjectResults(project=context['project'], positive = context['num_of_reviews_sentiment']['positive'],negative = context['num_of_reviews_sentiment']['negative'],neutral = context['num_of_reviews_sentiment']['neutral'],percentages=json.dumps(context['partitionend_sentiments_dict']))
+        obj.save()
+        return render(request, 'projects/projectchart.html', context)
 
 
 @login_required(login_url='/login')
