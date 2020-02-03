@@ -149,9 +149,11 @@
                     {{ user_form.password2|add_class:"form-control m-input"|attr:"placeholder:Confirm Password"|attr:"type:password" }}
                     <!-- <input type="password" class="form-control" name="password" placeholder="Password..."> -->
                   </div>
-                  <div class="input-group" style="text-align: center;">
-                  <input class="btn btn-primary btn-link btn-wd btn-lg"  value="Register" type="submit">
-                  </div>
+                  <div class="input-group" style="display: flex;flex-direction:column;justify-content:center;align-content:center;">
+                    <input class="btn btn-primary"  value="Register" type="submit">
+                      <button class="btn btn-link"><a href="{% url 'login' %}">Already have an account?</a></button>
+                    </div>
+                </div>
               </div>
               <!-- <div class="footer text-center">
                 <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Login</button> -->

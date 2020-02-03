@@ -16,7 +16,8 @@ from .rating_prediction import predict_rating_dataset, original_rating_dataset
 @login_required(login_url='/login')
 def projects(request):
     querysets = Project.objects.filter(user=request.user)
-    
+    # hasloaded ={}
+    # for 
     context = {
         'querysets': querysets
     }
