@@ -13,7 +13,7 @@ filePathJson = os.path.join(BASE_DIR,'projects/temp.json')
 
 #{"overall": 5.0, "verified": true, "reviewTime": "07 14, 2014", "reviewerID": "A25MDGOMZ2GALN", "asin": "B00005N7P0", "reviewerName": "Alvey", "reviewText": "A great read every issue.", "summary": "Five Stars", "unixReviewTime": 1405296000}
 
-filename = "/Users/amanchaudhary/Documents/projects/sih_nlp/projects/compressed_model_ratings.ftz"
+# filename = "/Users/amanchaudhary/Documents/projects/sih_nlp/projects/compressed_model_ratings.ftz"
 
 filename = os.path.join(BASE_DIR,'projects/compressed_model_ratings.ftz')
 
