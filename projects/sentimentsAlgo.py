@@ -2,8 +2,7 @@ import json
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from textblob import TextBlob
 
-filePathJson = '/Users/amanchaudhary/Documents/temp_dataset.json'
-
+# filePathJson = '/Users/amanchaudhary/Documents/temp_dataset.json'
 
 def reviews_preprocessing(filePathJson, key):
     fileContent = open(filePathJson)

@@ -2,7 +2,7 @@ import json
 import os
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404, HttpResponse
 from django.conf import settings
-from .models import Project,ProjectResults
+from .models import Project, ProjectResults
 from .forms import ProjectForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -11,12 +11,13 @@ from .rating_model import rate_review
 from .sentimentsAlgo import reviews_preprocessing, sentiment_scores, generate_particular_sentiments
 from .rating_prediction import predict_rating_dataset, original_rating_dataset
 from .aspect_rating import get_aspects_list, give_aspect_rating
+from .tweetsAlgos import getTweets
+
 
 @login_required(login_url='/login')
 def projects(request):
     querysets = Project.objects.filter(user=request.user)
-    # hasloaded ={}
-    # for 
+
     context = {
         'querysets': querysets
     }
@@ -70,9 +71,9 @@ def projectchart(request, pk):
     querysets = Project.objects.filter(pk=pk, user=request.user)
     queryset = querysets[0]
     result = ProjectResults.objects.filter(project=queryset)
-   
+
     if result:
-        
+
         num_of_reviews_sentiment = {
             "positive": result[0].positive,
             "negative": result[0].negative,
@@ -89,7 +90,8 @@ def projectchart(request, pk):
     else:
         key = querysets.values('key')[0]['key']
         context = data(request, pk, key)
-        obj = ProjectResults(project=context['project'], positive = context['num_of_reviews_sentiment']['positive'],negative = context['num_of_reviews_sentiment']['negative'],neutral = context['num_of_reviews_sentiment']['neutral'],percentages=json.dumps(context['partitionend_sentiments_dict']))
+        obj = ProjectResults(project=context['project'], positive=context['num_of_reviews_sentiment']['positive'], negative=context['num_of_reviews_sentiment']
+                             ['negative'], neutral=context['num_of_reviews_sentiment']['neutral'], percentages=json.dumps(context['partitionend_sentiments_dict']))
         obj.save()
         return render(request, 'projects/projectchart.html', context)
 
@@ -123,19 +125,17 @@ def projectcontext(request, pk):
     key = querysets.values('key')[0]['key']
     file = querysets.values('document')[0]['document']
     filename = os.path.join(settings.MEDIA_ROOT, file)
-    original_average_rating, num_of_reviews = original_rating_dataset(
-        filename, 'overall')
+    original_average_rating, num_of_reviews = original_rating_dataset(filename, 'overall')
     predicted_average_rating = predict_rating_dataset(filename, key)
-    accuracy = round(
-        (predicted_average_rating / original_average_rating) * 100, 2)
+    accuracy = round((predicted_average_rating / original_average_rating) * 100, 2)
     aspects_arr = querysets.values('aspects')[0]['aspects'].split(',')
+    
     aspects_dict = {}
     for aspect in aspects_arr:
         aspects_dict[aspect] = []
 
     result = get_aspects_list(filename, key, aspects_dict)
     aspects_rating = give_aspect_rating(result)
-    print(aspects_rating)
 
     context = {
         'project': project,

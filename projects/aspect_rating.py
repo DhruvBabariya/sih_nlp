@@ -2,29 +2,13 @@ import json
 import re
 import nltk
 import fasttext
-import os.path
 import os
+from .rating_model import rate_review
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # filePathJson = '/Users/amanchaudhary/Documents/projects/sih_nlp/projects/temp.json'
-
-filePathJson = os.path.join(BASE_DIR,'projects/temp.json')
-
-#{"overall": 5.0, "verified": true, "reviewTime": "07 14, 2014", "reviewerID": "A25MDGOMZ2GALN", "asin": "B00005N7P0", "reviewerName": "Alvey", "reviewText": "A great read every issue.", "summary": "Five Stars", "unixReviewTime": 1405296000}
-
-filename = "/Users/amanchaudhary/Documents/projects/sih_nlp/projects/compressed_model_ratings.ftz"
-
-filename = os.path.join(BASE_DIR,'projects/compressed_model_ratings.ftz')
-
-model = fasttext.load_model(filename)
-
-def rate_review(review):
-    review = review.lower()
-    review = re.sub(r"([.!?,'/()])", r" \1 ", review)
-    result = model.predict(review,1)
-    rating = result[0][0][9:]
-    return rating
+# filePathJson = os.path.join(BASE_DIR,'projects/temp.json')
 
 def get_aspects_list(filePathJson, key, aspect):
     fileContent = open(filePathJson)
@@ -59,8 +43,6 @@ def get_aspects_list(filePathJson, key, aspect):
                 aspect_list[el].append(sentence)
 
     return aspect_list
-
-# result = get_aspects_list(filePathJson, 'reviewText', aspect={'battery': [], 'camera': [], 'screen': [], 'sound':[] })
 
 def give_aspect_rating(aspect_list):
     aspect_rating = {}

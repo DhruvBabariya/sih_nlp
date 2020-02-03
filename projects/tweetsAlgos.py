@@ -2,6 +2,8 @@ import os
 import tweepy as tw
 import pandas as pd
 import re
+from .rating_model import rate_review
+from .sentimentsAlgo import sentiment_scores, generate_particular_sentiments
 
 def clean_tweet(tweet): 
     return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split()) 
@@ -34,5 +36,9 @@ def getTweets(search_words, date_since, count):
     return tweets_on_topic
 
 tweets = getTweets('#indvsnz', '2020-02-01', 10)
-print(tweets)
+scores = sentiment_scores(tweets)
+partitions, total = generate_particular_sentiments(scores, 10)
+print(partitions)
+print(total)
+
 
