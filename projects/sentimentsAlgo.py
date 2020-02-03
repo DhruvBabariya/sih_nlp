@@ -91,7 +91,7 @@ def generate_particular_sentiments(review_sentiment_scores, parts):
     return partitioned_sentiment_dict, num_of_tweets_for_sentiment
 
 
-# reviews = reviews_preprocessing(filePathJson, 'reviewText')
-# scores = sentiment_scores(reviews)
-# partitions, total = generate_particular_sentiments(scores, 10)
-# print(partitions)
+reviews = reviews_preprocessing(filePathJson, 'reviewText')
+scores = sentiment_scores(reviews)
+partitions, total = generate_particular_sentiments(scores, 10)
+print(partitions)

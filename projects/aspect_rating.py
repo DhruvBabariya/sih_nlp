@@ -4,7 +4,7 @@ import nltk
 import fasttext
 import os.path
 
-#filePathJson = '/Users/amanchaudhary/Downloads/Cell_Phones_and_Accessories.json'
+filePathJson = '/Users/amanchaudhary/Documents/projects/sih_nlp/projects/temp.json'
 
 #{"overall": 5.0, "verified": true, "reviewTime": "07 14, 2014", "reviewerID": "A25MDGOMZ2GALN", "asin": "B00005N7P0", "reviewerName": "Alvey", "reviewText": "A great read every issue.", "summary": "Five Stars", "unixReviewTime": 1405296000}
 
@@ -52,7 +52,7 @@ def get_aspects_list(filePathJson, key, aspect):
 
     return aspect_list
 
-#result = get_aspects_list(filePathJson, 'reviewText', aspect={'battery': [], 'camera': [], 'screen': [], 'sound':[] })
+# result = get_aspects_list(filePathJson, 'reviewText', aspect={'battery': [], 'camera': [], 'screen': [], 'sound':[] })
 
 def give_aspect_rating(aspect_list):
     aspect_rating = {}
@@ -63,11 +63,15 @@ def give_aspect_rating(aspect_list):
                 review = ''.join(review.split('\n'))
             rating += float(rate_review(review))
 
+        if(len(aspect_list[keys]) == 0):
+            continue
         aspect_rating[keys] = round(rating /len(aspect_list[keys]), 2)
 
     return aspect_rating
 
-#print(give_aspect_rating(result))
+# result = get_aspects_list(filePathJson, 'reviewText', aspect={'battery': [], 'camera': []})
+# rating_aspects = give_aspect_rating(result)
+# print(rating_aspects)
 
 
 
