@@ -102,19 +102,19 @@
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">Project</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
-										<li class="m-menu__item " aria-haspopup="true"><a href="{% url 'createproject' %}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Create Project</span></a></li>
+										<li class="m-menu__item " aria-haspopup="true"><a href="{% url 'createproject' %}" class="m-menu__link "><i class="m-menu__link-bullet fa fa-plus"><span></span></i><span class="m-menu__link-text">Create Project</span></a></li>
 										<li class="m-menu__item " aria-haspopup="true"><a href="{% url 'index'%}" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">View Project</span></a></li>
 										
 									</ul>
 								</div>
 							</li>
-							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'single_review'%}" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Single Review</span>
+							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="{% url 'single_review'%}" class="m-menu__link "><i class="m-menu__link-icon fa fa-pencil-alt""></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Single Review</span>
 											<span class="m-menu__link-badge"></span> </span></span></a></li>
 										<form action="{% url 'logout' %}" id="logout" method="post">
 												{% csrf_token %}
 												<input type="hidden">
 											</form>
-							<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a style="cursor:pointer;" onclick="logout()" class="m-menu__link "><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Logout</span>
+							<li class="m-menu__item " aria-haspopup="true"><a style="cursor:pointer;" onclick="logout()" class="m-menu__link "><i class="m-menu__link-icon fa fa-sign-out-alt"></i><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Logout</span>
 											<span class="m-menu__link-badge"></span> </span></span></a></li>
 							
 							

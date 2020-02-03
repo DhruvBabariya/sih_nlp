@@ -5,10 +5,7 @@ import fasttext
 import os
 from .rating_model import rate_review
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 # filePathJson = '/Users/amanchaudhary/Documents/projects/sih_nlp/projects/temp.json'
-# filePathJson = os.path.join(BASE_DIR,'projects/temp.json')
 
 def get_aspects_list(filePathJson, key, aspect):
     fileContent = open(filePathJson)

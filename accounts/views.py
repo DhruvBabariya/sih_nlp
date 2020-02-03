@@ -21,10 +21,10 @@ def register(request):
             password2 = request.POST['password2']
             if password1 == password2:
                 if User.objects.filter(email=email).exists():
-                    messages.error(request,'That email is being used')
+                    messages.error(request,'That email is being used!')
                     return redirect('register')
                 elif User.objects.filter(username=username).exists():
-                    messages.error(request,'That username is beign used')
+                    messages.error(request,'That username is being used!')
                     return redirect('register')
                 
                 else:
