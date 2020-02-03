@@ -9,9 +9,8 @@ from django.contrib.auth.decorators import login_required
 from .vader import sentiment_score
 from .rating_model import rate_review
 from .sentimentsAlgo import reviews_preprocessing, sentiment_scores, generate_particular_sentiments
-from .word_cloud import generate_word_cloud
 from .rating_prediction import predict_rating_dataset, original_rating_dataset
-
+from .aspect_rating import get_aspects_list, give_aspect_rating
 
 @login_required(login_url='/login')
 def projects(request):
@@ -129,15 +128,22 @@ def projectcontext(request, pk):
     predicted_average_rating = predict_rating_dataset(filename, key)
     accuracy = round(
         (predicted_average_rating / original_average_rating) * 100, 2)
+    aspects_arr = querysets.values('aspects')[0]['aspects'].split(',')
+    aspects_dict = {}
+    for aspect in aspects_arr:
+        aspects_dict[aspect] = []
 
-    print(querysets.values('name'))
+    result = get_aspects_list(filename, key, aspects_dict)
+    aspects_rating = give_aspect_rating(result)
+    print(aspects_rating)
+
     context = {
         'project': project,
         'original_average_rating': original_average_rating,
         'predicted_average_rating': predicted_average_rating,
         'accuracy': accuracy,
-        'num_of_reviews': num_of_reviews
+        'num_of_reviews': num_of_reviews,
+        'aspects_rating': aspects_rating
     }
-    print(context)
 
     return render(request, 'projects/projectcontext.html', context)
