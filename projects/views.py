@@ -2,7 +2,7 @@ import json
 import os
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404, HttpResponse
 from django.conf import settings
-from .models import Project, ProjectResults
+from .models import Project, ProjectResults, ContextResults
 from .forms import ProjectForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -122,20 +122,31 @@ def single_review(request):
 def projectcontext(request, pk):
     project = get_object_or_404(Project, pk=pk, user=request.user)
     querysets = Project.objects.filter(pk=pk, user=request.user)
+    queryset = querysets[0]
+    context_result = ContextResults.objects.filter(project=queryset)
     key = querysets.values('key')[0]['key']
     file = querysets.values('document')[0]['document']
     filename = os.path.join(settings.MEDIA_ROOT, file)
-    original_average_rating, num_of_reviews = original_rating_dataset(filename, 'overall')
-    predicted_average_rating = predict_rating_dataset(filename, key)
-    accuracy = round((predicted_average_rating / original_average_rating) * 100, 2)
     aspects_arr = querysets.values('aspects')[0]['aspects'].split(',')
-    
     aspects_dict = {}
     for aspect in aspects_arr:
         aspects_dict[aspect.strip()] = []
 
-    result = get_aspects_list(filename, key, aspects_dict)
-    aspects_rating = give_aspect_rating(result)
+    if context_result:
+        original_average_rating = context_result[0].original_average_rating
+        predicted_average_rating = context_result[0].predicted_average_rating
+        num_of_reviews = context_result[0].num_of_reviews
+        accuracy = round((predicted_average_rating / original_average_rating) * 100, 2)
+        aspects_rating = json.loads(context_result[0].aspects_rating)
+    else:
+        original_average_rating, num_of_reviews = original_rating_dataset(filename, 'overall')
+        predicted_average_rating = predict_rating_dataset(filename, key)
+        accuracy = round((predicted_average_rating / original_average_rating) * 100, 2)
+        result = get_aspects_list(filename, key, aspects_dict)
+        aspects_rating = give_aspect_rating(result)
+        obj = ContextResults(project=queryset,original_average_rating=original_average_rating, predicted_average_rating=predicted_average_rating,num_of_reviews=num_of_reviews, aspects_rating=json.dumps(aspects_rating))
+        obj.save()
+
 
     context = {
         'project': project,

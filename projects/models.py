@@ -22,4 +22,16 @@ class ProjectResults(models.Model):
     def __str__(self):
         return self.project.name
 
+class ContextResults(models.Model):
+    project = models.ForeignKey(Project,on_delete=models.CASCADE,null=True)
+    original_average_rating = models.FloatField()
+    predicted_average_rating = models.FloatField()
+    num_of_reviews = models.IntegerField(max_length=10)
+    aspects_rating = models.TextField(max_length=5000)
+
+    def __str__(self):
+        return self.project.name
+
+
+
 
