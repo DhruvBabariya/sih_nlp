@@ -132,7 +132,7 @@ def projectcontext(request, pk):
     
     aspects_dict = {}
     for aspect in aspects_arr:
-        aspects_dict[aspect] = []
+        aspects_dict[aspect.strip()] = []
 
     result = get_aspects_list(filename, key, aspects_dict)
     aspects_rating = give_aspect_rating(result)

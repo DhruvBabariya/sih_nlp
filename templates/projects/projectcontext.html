@@ -177,67 +177,11 @@
 									<div class="m-portlet__body">
 										<div class="tab-content">
 											<div class="tab-pane active" id="m_portlet_tab_1_2">
-												{% if project.id == 1 %}
-												<div class="row">
-													<div class="col-sm-12 col-md-12 col-lg-6">
-														<div class="m-portlet">
-															<div class="m-portlet__body">
-																<div class="m-widget26">
-																	<div class="m-widget26__number">
-																		Battery
-																		<small style="font-size: 24px;">Rating: {{aspect.battery}}3.66/5</small>
-																	</div>
-																	
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="m--space-30"></div>
-													<div class="col-sm-12 col-md-12 col-lg-6">
-														<div class="m-portlet">
-															<div class="m-portlet__body">
-																<div class="m-widget26">
-																	<div class="m-widget26__number">
-																		Sound
-																		<small style="font-size: 24px;">Rating: {{aspect.sound}}3.39/5</small>
-																	</div>
-																	
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="m--space-30"></div>
-													<div class="col-sm-12 col-md-12 col-lg-6">
-														<div class="m-portlet">
-															<div class="m-portlet__body">
-																<div class="m-widget26">
-																	<div class="m-widget26__number">
-																		Screen
-																		<small style="font-size: 24px;">Rating: {{aspect.screen}}3.21/5</small>
-																	</div>
-																	
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="m--space-30"></div>
-													<div class="col-sm-12 col-md-12 col-lg-6">
-														<div class="m-portlet">
-															<div class="m-portlet__body">
-																<div class="m-widget26">
-																	<div class="m-widget26__number">
-																		Camera
-																		<small style="font-size: 24px;">Rating: {{aspect.camera}}3.44/5</small>
-																	</div>
-																	
-																</div>
-															</div>
-														</div>
-													</div>
+												
+												<div class="row" id="aspects_div">
 		
 													</div>
 												</div>
-												{% endif %}
 												<div class="row">
 													<div class="col-xl-12">
 
@@ -546,9 +490,32 @@
 		
 		
 		<script>
-		function logout() {
-			document.getElementById('logout').submit();
-		}
+
+			var aspects_data = {{ aspects_rating|safe }};
+			var aspects_keys = Object.keys(aspects_data).map(aspect => aspect.trim());
+
+			for(var i=0;i<aspects_keys.length;i++) {
+				var aspects_html = `
+				<div class="col-sm-12 col-md-12 col-lg-6">
+					<div class="m-portlet">
+						<div class="m-portlet__body">
+							<div class="m-widget26">
+								<div class="m-widget26__number">
+									${aspects_keys[i].charAt(0).toUpperCase() + aspects_keys[i].slice(1)}
+									<small style="font-size: 24px;">Rating: ${aspects_data[aspects_keys[i]]}/5</small>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				`;
+				$("#aspects_div").append(aspects_html);
+			}
+
+			function logout() {
+				document.getElementById('logout').submit();
+			}
 		</script>
 		
 
