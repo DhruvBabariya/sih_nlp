@@ -39,10 +39,9 @@ pip install -r requirements.txt
 ## Usage
 
 - Download the Model
-```
-https://drive.google.com/file/d/1NVa7a0Z6QS9sy3Cd1xqAuRsRNYCfhMNQ/view?usp=sharing
-```
-Download the model and place it in the projects directory.
+
+[Download the model](https://drive.google.com/file/d/1NVa7a0Z6QS9sy3Cd1xqAuRsRNYCfhMNQ/view?usp=sharing) and place it in the projects directory.
+
 - Mac and Linux
 ```bash
 python3 manage.py runserver
