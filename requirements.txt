@@ -2,7 +2,7 @@ autopep8==1.4.4
 certifi==2019.11.28
 chardet==3.0.4
 cycler==0.10.0
-Django==2.2.1
+Django==2.2.13
 django-widget-tweaks==1.4.5
 fasttext==0.9.1
 idna==2.8
