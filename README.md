@@ -1,5 +1,5 @@
 # Sentiment Analyzer
-It is a sentiment analyzer that predicts the rating and sentiment of given text. Also it visulaizes ouptut graphcally
+It is a sentiment analyzer that predicts the rating and sentiment of given text. Also it visualizes the output graphically
 
 ## Installation (Mac and Linux)
 
